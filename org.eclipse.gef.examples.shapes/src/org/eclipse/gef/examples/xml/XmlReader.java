@@ -1,36 +1,47 @@
-/*******************************************************************************
- * Copyright (c) 2005 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     IBM Corporation - initial API and implementation
- *******************************************************************************/
 
 package org.eclipse.gef.examples.xml;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 public class XmlReader {
 
-	public static void main(String args[]) {
-		Serializer serializer = new Persister();
-		File file = new File("example.xml");
-		
-		try {
-			ActorRootElement root  = serializer.read(ActorRootElement.class, file);
-			
-			System.out.println(root.getId()+ " " + root.getName());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private String filename;
+	private Serializer serializer;
+	private File file;
+	private ActorRootElement root;
+
+	public XmlReader(String filename) throws Exception {
+		this.filename = filename;
+		init();
+	}
+
+	private void init() throws Exception {
+		file = new File(filename);
+		serializer = new Persister();
+		root = serializer.read(ActorRootElement.class, file);
+	}
+
+	public ActorRootElement getActor() {
+		return root;
+	}
+
+	public Map<PortElement, GraphicalElement> getPortsAndGrapicals() {
+		Map<PortElement, GraphicalElement> map = new HashMap<PortElement, GraphicalElement>();
+		for (PortElement pe : root.getPort()) {
+			map.put(pe, pe.getGraphicalElement());
 		}
 
+		return map;
+	}
+
+	public Collection<PropertyElement> getProperties() {
+		return root.getProperty();
 	}
 
 }
