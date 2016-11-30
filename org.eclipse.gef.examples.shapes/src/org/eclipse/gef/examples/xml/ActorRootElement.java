@@ -1,34 +1,53 @@
 
 package org.eclipse.gef.examples.xml;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-@Root
+@Root(name="actor")
 public class ActorRootElement {
 
-	@ElementList
-	private List<PortElement> port;
+	@ElementList(name="port", inline=true)
+	private Collection<PortElement> port;
 
-	@ElementList
-	private List<PropertyElement> property;
+	@ElementList(name="property", inline=true)
+	private Collection<PropertyElement> property;
 
-	@Attribute
-	private ActorValue actorValue;
 
-	public List<PortElement> getPort() {
+	public Collection<PortElement> getPort() {
 		return port;
 	}
 
-	public List<PropertyElement> getProperty() {
+	public Collection<PropertyElement> getProperty() {
 		return property;
 	}
 
-	public ActorValue getActorValue() {
-		return actorValue;
+	
+	@Attribute(name="name")
+	private String name;
+
+	@Attribute
+	private String type;
+
+	@Attribute
+	private String ID;
+
+	public String getName() {
+		return name;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getId() {
+		return ID;
+	}
+
 
 }

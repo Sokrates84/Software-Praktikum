@@ -1,17 +1,25 @@
 
 package org.eclipse.gef.examples.xml;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root
+@Root(name="property")
 public class PropertyElement {
 
-	@Element
-	private PropertyValue propertyValue;
+	@Attribute
+	private String name;
 
-	public PropertyValue getPropertyValue() {
-		return propertyValue;
+	@Attribute
+	private String value;
+
+	public String getName() {
+		return name;
+	}
+
+	public String getValue() {
+		return value;
 	}
 
 }

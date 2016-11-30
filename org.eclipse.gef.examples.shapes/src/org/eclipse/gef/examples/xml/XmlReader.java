@@ -18,9 +18,18 @@ import org.simpleframework.xml.core.Persister;
 
 public class XmlReader {
 
-	public static void main() {
+	public static void main(String args[]) {
 		Serializer serializer = new Persister();
 		File file = new File("example.xml");
+		
+		try {
+			ActorRootElement root  = serializer.read(ActorRootElement.class, file);
+			
+			System.out.println(root.getId()+ " " + root.getName());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

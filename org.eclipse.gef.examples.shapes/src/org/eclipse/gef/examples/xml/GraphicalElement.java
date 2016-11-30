@@ -1,17 +1,35 @@
 
 package org.eclipse.gef.examples.xml;
 
+import java.util.List;
+
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root
+@Root(name="graphical")
 public class GraphicalElement {
 
-	@Element
-	private GraphicalValues graphicalValues;
+	@Attribute
+	private String color;
 
-	public GraphicalValues getGraphicalValues() {
-		return graphicalValues;
+	@Attribute
+	private String index;
+
+	@Attribute
+	private String alignment;
+
+	public String getColor() {
+		return color;
 	}
+
+	public String getIndex() {
+		return index;
+	}
+
+	public String getAlignment() {
+		return alignment;
+	}
+
 
 }
