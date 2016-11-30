@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension point="org.eclipse.ui.editors">
+      <editor name="GEF Shapes Example"
+              extensions="shapes"
+              icon="shapes.gif"
+              default="true"
+              class="org.eclipse.gef.examples.shapes.ShapesEditor"
+              contributorClass="org.eclipse.gef.examples.shapes.ShapesEditorActionBarContributor"
+              id="GEF Shapes Editor">
+      </editor>
+   </extension>
+   <extension point="org.eclipse.ui.newWizards">
+      <category name="Examples"
+                parentCategory="org.eclipse.ui.Examples"
+                id="org.eclipse.gef.examples"/>
+      <wizard name="Shapes Diagram"
+              icon="shapes.gif"
+              category="org.eclipse.ui.Examples/org.eclipse.gef.examples"
+              class="org.eclipse.gef.examples.shapes.ShapesCreationWizard"
+              id="org.eclipse.gef.examples.shapes.ShapesCreationWizard">
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.gef.examples.shapes"
+            name="Sample Category">
+      </category>
+      <view
+            category="org.eclipse.gef.examples.shapes"
+            class="org.eclipse.gef.examples.shapes.views.PropertiesView"
+            icon="icons/sample.gif"
+            id="org.eclipse.gef.examples.shapes.views.PropertiesView"
+            name="Properties View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="org.eclipse.gef.examples.shapes.views.PropertiesView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.ProblemView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+</plugin>
