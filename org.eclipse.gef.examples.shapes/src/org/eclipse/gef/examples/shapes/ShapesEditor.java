@@ -403,4 +403,8 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 		}
 	}
 
+	public Shell getShell() {
+		return getSite().getWorkbenchWindow().getShell();
+	}
+
 }

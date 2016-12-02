@@ -2,22 +2,19 @@
 package org.eclipse.gef.examples.xml;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-@Root(name="actor")
+@Root(name = "actor")
 public class ActorRootElement {
 
-	@ElementList(name="port", inline=true)
+	@ElementList(name = "port", inline = true)
 	private Collection<PortElement> port;
 
-	@ElementList(name="property", inline=true)
+	@ElementList(name = "property", inline = true)
 	private Collection<PropertyElement> property;
-
 
 	public Collection<PortElement> getPort() {
 		return port;
@@ -27,8 +24,7 @@ public class ActorRootElement {
 		return property;
 	}
 
-	
-	@Attribute(name="name")
+	@Attribute(name = "name")
 	private String name;
 
 	@Attribute
@@ -48,6 +44,5 @@ public class ActorRootElement {
 	public String getId() {
 		return ID;
 	}
-
 
 }
