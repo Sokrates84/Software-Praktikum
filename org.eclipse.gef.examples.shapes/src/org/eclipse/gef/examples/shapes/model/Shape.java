@@ -125,7 +125,7 @@ public abstract class Shape extends ModelElement {
 	/** Location of this shape. */
 	private Point location = new Point(0, 0);
 	/** Size of this shape. */
-	private Dimension size = new Dimension(50, 50);
+	private Dimension size = new Dimension(100, 100);
 	/** List of outgoing Connections. */
 	private List sourceConnections = new ArrayList();
 	/** List of incoming Connections. */

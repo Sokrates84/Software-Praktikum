@@ -10,6 +10,7 @@ import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import org.eclipse.gef.examples.shapes.ShapesEditorPaletteFactory;
+import org.eclipse.gef.examples.xml.ComponentMetadata;
 
 /*******************************************************************************
  * Copyright (c) 2005 IBM Corporation and others. All rights reserved. This
@@ -41,7 +42,14 @@ public class OPFHandler implements IHandler {
 		File dir = new File(filename);
 		File[] directoryListing = dir.listFiles();
 
-		ShapesEditorPaletteFactory.createShapesDrawer(directoryListing);
+		try {
+			ComponentMetadata.readXmlMetadata(directoryListing);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		ShapesEditorPaletteFactory.populatePaletteView(
+				ComponentMetadata.getComponentMetadataMap());
 
 		return null;
 	}

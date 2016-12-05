@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.gef.examples.shapes;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 
-import org.eclipse.gef.palette.CombinedTemplateCreationEntry;
 import org.eclipse.gef.palette.ConnectionCreationToolEntry;
 import org.eclipse.gef.palette.MarqueeToolEntry;
 import org.eclipse.gef.palette.PaletteContainer;
@@ -29,9 +26,8 @@ import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.requests.SimpleFactory;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
-import org.eclipse.gef.examples.shapes.model.EllipticalShape;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.xml.ActorRootElement;
-import org.eclipse.gef.examples.xml.XmlReader;
 
 /**
  * Utility class that can create a GEF Palette.
@@ -41,42 +37,35 @@ import org.eclipse.gef.examples.xml.XmlReader;
  */
 public class ShapesEditorPaletteFactory {
 
-	private static Map<String, ActorRootElement> map = new HashMap<>();
+	// private static Map<String, CombinedTemplateCreationEntry> palleteEntryMap
+	// = new HashMap<>();
 
 	private static PaletteDrawer PALETTE_DRAWER;
 
 	/** Create the "Shapes" drawer. */
-	public static PaletteContainer createShapesDrawer(File[] directoryListing) {
+	public static PaletteContainer populatePaletteView(
+			Map<String, ActorRootElement> componentData) {
 
-		XmlReader reader = null;
-		try {
+		for (Map.Entry<String, ActorRootElement> entry : componentData
+				.entrySet()) {
+			// if (!palleteEntryMap.containsKey(entry.getKey())) {
 
-			for (int i = 0; i < directoryListing.length; i++) {
-				reader = new XmlReader(directoryListing[i].getPath());
+			PaletteComponent component = new PaletteComponent(
+					entry.getValue().getType(),
+					"Create an:" + " " + entry.getValue().getName(),
+					RectangularShape.class,
+					new SimpleFactory(RectangularShape.class),
+					ImageDescriptor.createFromFile(ShapesPlugin.class,
+							"icons/roundRectangle.png"),
+					ImageDescriptor.createFromFile(ShapesPlugin.class,
+							"icons/roundRectangle.png"));
+			PALETTE_DRAWER.add(component);
 
-				ActorRootElement root = reader.getActor();
+			component.setData(entry.getValue());
+			// palleteEntryMap.put(entry.getKey(), component);
+			// }
 
-				if (!map.containsKey(root.getId())) {
-					map.put(root.getId(), root);
-
-					CombinedTemplateCreationEntry component = new CombinedTemplateCreationEntry(
-							root.getType(), "Create an:" + " " + root.getName(),
-							EllipticalShape.class,
-							new SimpleFactory(EllipticalShape.class),
-							ImageDescriptor.createFromFile(ShapesPlugin.class,
-									"icons/ellipse16.gif"),
-							ImageDescriptor.createFromFile(ShapesPlugin.class,
-									"icons/ellipse24.gif"));
-					PALETTE_DRAWER.add(component);
-				}
-
-			}
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
 		return PALETTE_DRAWER;
 	}
 

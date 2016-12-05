@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.parts;
 
 import java.beans.PropertyChangeEvent;
@@ -33,9 +33,7 @@ import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
-import org.eclipse.gef.examples.shapes.model.EllipticalShape;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
-import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeCreateCommand;
@@ -56,8 +54,8 @@ import org.eclipse.gef.examples.shapes.model.commands.ShapeSetConstraintCommand;
  * 
  * @author Elias Volanakis
  */
-class DiagramEditPart extends AbstractGraphicalEditPart implements
-		PropertyChangeListener {
+class DiagramEditPart extends AbstractGraphicalEditPart
+		implements PropertyChangeListener {
 
 	/**
 	 * Upon activation, attach to the model element as a property change
@@ -97,7 +95,8 @@ class DiagramEditPart extends AbstractGraphicalEditPart implements
 		f.setLayoutManager(new FreeformLayout());
 
 		// Create the static router for the connection layer
-		ConnectionLayer connLayer = (ConnectionLayer) getLayer(LayerConstants.CONNECTION_LAYER);
+		ConnectionLayer connLayer = (ConnectionLayer) getLayer(
+				LayerConstants.CONNECTION_LAYER);
 		connLayer.setConnectionRouter(new ShortestPathConnectionRouter(f));
 
 		return f;
@@ -159,7 +158,8 @@ class DiagramEditPart extends AbstractGraphicalEditPart implements
 		 * ChangeBoundsRequest, EditPart, Object)
 		 */
 		protected Command createChangeConstraintCommand(
-				ChangeBoundsRequest request, EditPart child, Object constraint) {
+				ChangeBoundsRequest request, EditPart child,
+				Object constraint) {
 			if (child instanceof ShapeEditPart
 					&& constraint instanceof Rectangle) {
 				// return a command that can move and/or resize a Shape
@@ -190,14 +190,11 @@ class DiagramEditPart extends AbstractGraphicalEditPart implements
 		 */
 		protected Command getCreateCommand(CreateRequest request) {
 			Object childClass = request.getNewObjectType();
-			if (childClass == EllipticalShape.class
-					|| childClass == RectangularShape.class) {
-				// return a command that can add a Shape to a ShapesDiagram
-				return new ShapeCreateCommand((Shape) request.getNewObject(),
-						(ShapesDiagram) getHost().getModel(),
-						(Rectangle) getConstraintFor(request));
-			}
-			return null;
+
+			return new ShapeCreateCommand((Shape) request.getNewObject(),
+					(ShapesDiagram) getHost().getModel(),
+					(Rectangle) getConstraintFor(request));
+
 		}
 
 	}

@@ -20,7 +20,8 @@ import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import org.eclipse.gef.ConnectionEditPart;
@@ -34,6 +35,7 @@ import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
+import org.eclipse.gef.examples.shapes.ShapesEditorPaletteFactory;
 import org.eclipse.gef.examples.shapes.model.Connection;
 import org.eclipse.gef.examples.shapes.model.EllipticalShape;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
@@ -163,26 +165,56 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
 	 */
 	protected IFigure createFigure() {
-		IFigure f = createFigureForModel();
+		// InlineFlow f = (InlineFlow) createFigureForModel();
+		// f.setOpaque(true);
+		// f.setBackgroundColor(ColorConstants.lightBlue);
+		// Label f = (Label) createFigureForModel();
+		Label f = new Label();
+
 		f.setOpaque(true); // non-transparent figure
-		f.setBackgroundColor(ColorConstants.green);
+		// TODO: Hier die Farbe aus dem geparsten xml rein!!!!!!!!!!!!!!!!
+		f.setBackgroundColor(ColorConstants.lightBlue);
+		f.setLabelAlignment(PositionConstants.TOP);
+		f.setTextAlignment(PositionConstants.TOP);
+		f.setText("CPUSCHEDULER");
+		f.setVisible(true);
+
+		Ellipse e = new Ellipse();
+		e.setOpaque(true);
+		e.setBackgroundColor(ColorConstants.red);
+		e.setVisible(true);
+		e.setSize(20, 20);
+
+		f.add(e);
 		return f;
 	}
 
-	/**
-	 * Return a IFigure depending on the instance of the current model element.
-	 * This allows this EditPart to be used for both sublasses of Shape.
-	 */
-	private IFigure createFigureForModel() {
-		if (getModel() instanceof EllipticalShape) {
-			return new Ellipse();
-		} else if (getModel() instanceof RectangularShape) {
-			return new RectangleFigure();
-		} else {
-			// if Shapes gets extended the conditions above must be updated
-			throw new IllegalArgumentException();
-		}
+	@SuppressWarnings("unused")
+	private void getSelectedComponent() {
+		@SuppressWarnings({ "rawtypes" })
+		List children = ShapesEditorPaletteFactory.getPaletteDrawer()
+				.getChildren();
+		for (int i = 0; i < children.size(); i++)
+			System.out.println(children.get(i));
+
 	}
+
+	// /**
+	// * Return a IFigure depending on the instance of the current model
+	// element.
+	// * This allows this EditPart to be used for both sublasses of Shape.
+	// */
+	// private IFigure createFigureForModel() {
+	// if (getModel() instanceof EllipticalShape) {
+	// return new Ellipse();
+	// } else if (getModel() instanceof RectangularShape) {
+	// return new Label();
+	// // return new RoundedRectangle();
+	// } else {
+	// // if Shapes gets extended the conditions above must be updated
+	// throw new IllegalArgumentException();
+	// }
+	// }
 
 	/**
 	 * Upon deactivation, detach from the model element as a property change
@@ -203,12 +235,15 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 		if (anchor == null) {
 			if (getModel() instanceof EllipticalShape)
 				anchor = new EllipseAnchor(getFigure());
-			else if (getModel() instanceof RectangularShape)
+			else if (getModel() instanceof RectangularShape) {
+				// anchor = new LabelAnchor((Label) getFigure());
+				// anchor = new RoundedRectangleAnchor(null, null);
 				anchor = new ChopboxAnchor(getFigure());
-			else
+			} else
 				// if Shapes gets extended the conditions above must be updated
 				throw new IllegalArgumentException("unexpected model");
 		}
+
 		return anchor;
 	}
 
