@@ -12,12 +12,17 @@ package org.eclipse.gef.examples.shapes.model;
 
 import org.eclipse.swt.graphics.Image;
 
+import org.eclipse.gef.examples.xml.ActorRootElement;
+
 /**
  * A rectangular shape.
  * 
  * @author Elias Volanakis
  */
 public class RectangularShape extends Shape {
+
+	ActorRootElement data;
+
 	/** A 16x16 pictogram of a rectangular shape. */
 	private static final Image RECTANGLE_ICON = createImage(
 			"icons/roundRectangle.png");
@@ -30,5 +35,13 @@ public class RectangularShape extends Shape {
 
 	public String toString() {
 		return "Rectangle " + hashCode();
+	}
+
+	public ActorRootElement getData() {
+		return data;
+	}
+
+	public void setData(ActorRootElement data) {
+		this.data = data;
 	}
 }

@@ -1,9 +1,10 @@
 <actor name="CPU Scheduler" type="CPUSCHEDULER" ID="0"> 
-	<port name="interrupts" multiport="false" width="1" type="inputport"> 
+	<port name="interruptsScheduler" multiport="false" width="1" type="inputport"> 
 		<graphical color="123,215,128" index="1" alignment="West" /> 
 	</port> 
-	<port name="toPeripherals" multiport="false" width="1" type="outputport"> 
+	<port name="toPeripheralsScheduler" multiport="false" width="1" type="outputport"> 
 		<graphical color="123,215,128" index="2" alignment="West" /> 
-	</port> <property name="Monitor" value="false" /> 
+	</port> 
+	<property name="Monitor" value="false" /> 
 	<property name="CPUCycleDuration" value="100" /> 
 </actor>

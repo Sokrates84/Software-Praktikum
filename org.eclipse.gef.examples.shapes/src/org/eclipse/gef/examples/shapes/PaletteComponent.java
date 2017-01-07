@@ -20,13 +20,19 @@ import org.eclipse.gef.examples.xml.ActorRootElement;
 
 public class PaletteComponent extends CombinedTemplateCreationEntry {
 
-	private ActorRootElement data;
-
 	public PaletteComponent(String label, String shortDesc, Object template,
 			CreationFactory factory, ImageDescriptor iconSmall,
 			ImageDescriptor iconLarge) {
 		super(label, shortDesc, template, factory, iconSmall, iconLarge);
 	}
+
+	private ActorRootElement data;
+
+	// public PaletteComponent(String label, String shortDesc, Object template,
+	// CreationFactory factory, ImageDescriptor iconSmall,
+	// ImageDescriptor iconLarge) {
+	// super(label, shortDesc, template, factory, iconSmall, iconLarge);
+	// }
 
 	public ActorRootElement getData() {
 		return data;
@@ -34,6 +40,16 @@ public class PaletteComponent extends CombinedTemplateCreationEntry {
 
 	public void setData(ActorRootElement data) {
 		this.data = data;
+	}
+
+	@Override
+	public Object getTemplate() {
+		return super.getTemplate();
+	}
+
+	@Override
+	public void setTemplate(Object template) {
+		super.setTemplate(template);
 	}
 
 }

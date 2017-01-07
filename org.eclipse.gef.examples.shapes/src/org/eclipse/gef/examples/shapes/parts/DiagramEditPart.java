@@ -1,13 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2004, 2005 Elias Volanakis and others.
-�* All rights reserved. This program and the accompanying materials
-�* are made available under the terms of the Eclipse Public License v1.0
-�* which accompanies this distribution, and is available at
-�* http://www.eclipse.org/legal/epl-v10.html
-�*
-�* Contributors:
-�*����Elias Volanakis - initial API and implementation
-�*******************************************************************************/
+/********************************************************************************Copyright(c)2004,2005 Elias Volanakis and others.�*All rights reserved.This program and the accompanying materials�*are made available under the terms of the Eclipse Public License v1.0�*which accompanies this distribution,and is available at�*http://www.eclipse.org/legal/epl-v10.html
+�*�*Contributors:�*����Elias Volanakis-initial API and implementation�*******************************************************************************/
 package org.eclipse.gef.examples.shapes.parts;
 
 import java.beans.PropertyChangeEvent;
@@ -33,24 +25,28 @@ import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
+import org.eclipse.gef.examples.shapes.PaletteComponent;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeSetConstraintCommand;
 
-/**
- * EditPart for the a ShapesDiagram instance.
+/***
+ * EditPart for the a ShapesDiagram instance.*
  * <p>
- * This edit part server as the main diagram container, the white area where
- * everything else is in. Also responsible for the container's layout (the way
- * the container rearanges is contents) and the container's capabilities (edit
- * policies).
+ * *This edit part server as the main diagram container,the white area
+ * where*everything else is in.Also responsible for the container'slayout(the
+ * way*the container rearanges is contents)and the
+ * container'scapabilities(edit*policies).*
  * </p>
+ * *
  * <p>
- * This edit part must implement the PropertyChangeListener interface, so it can
- * be notified of property changes in the corresponding model element.
+ * *This edit part must implement the PropertyChangeListener interface,so
+ * it/can*be notified of property changes in the corresponding model element.*
  * </p>
+ * **
  * 
  * @author Elias Volanakis
  */
@@ -70,7 +66,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#createEditPolicies()
 	 */
 	protected void createEditPolicies() {
@@ -86,7 +82,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
 	 */
 	protected IFigure createFigure() {
@@ -119,7 +115,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#getModelChildren()
 	 */
 	protected List getModelChildren() {
@@ -128,7 +124,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * java.beans.PropertyChangeListener#propertyChange(PropertyChangeEvent)
 	 */
@@ -146,14 +142,14 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 	/**
 	 * EditPolicy for the Figure used by this edit part. Children of
 	 * XYLayoutEditPolicy can be used in Figures with XYLayout.
-	 * 
+	 *
 	 * @author Elias Volanakis
 	 */
 	private static class ShapesXYLayoutEditPolicy extends XYLayoutEditPolicy {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see ConstrainedLayoutEditPolicy#createChangeConstraintCommand(
 		 * ChangeBoundsRequest, EditPart, Object)
 		 */
@@ -172,7 +168,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see
 		 * ConstrainedLayoutEditPolicy#createChangeConstraintCommand(EditPart,
 		 * Object)
@@ -185,13 +181,19 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see LayoutEditPolicy#getCreateCommand(CreateRequest)
 		 */
 		protected Command getCreateCommand(CreateRequest request) {
+			@SuppressWarnings("unused")
 			Object childClass = request.getNewObjectType();
+			PaletteComponent paletteComponent = (PaletteComponent) request
+					.getNewObject();
 
-			return new ShapeCreateCommand((Shape) request.getNewObject(),
+			RectangularShape shape = new RectangularShape();
+			shape.setData(paletteComponent.getData());
+
+			return new ShapeCreateCommand((Shape) shape,
 					(ShapesDiagram) getHost().getModel(),
 					(Rectangle) getConstraintFor(request));
 

@@ -12,16 +12,14 @@ package org.eclipse.gef.examples.shapes.parts;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
-import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import org.eclipse.gef.ConnectionEditPart;
@@ -35,7 +33,6 @@ import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
-import org.eclipse.gef.examples.shapes.ShapesEditorPaletteFactory;
 import org.eclipse.gef.examples.shapes.model.Connection;
 import org.eclipse.gef.examples.shapes.model.EllipticalShape;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
@@ -43,6 +40,10 @@ import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionReconnectCommand;
+import org.eclipse.gef.examples.xml.ActorRootElement;
+import org.eclipse.gef.examples.xml.PortElement;
+
+import figure.ActorFigure;
 
 /**
  * EditPart used for Shape instances (more specific for EllipticalShape and
@@ -169,34 +170,42 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 		// f.setOpaque(true);
 		// f.setBackgroundColor(ColorConstants.lightBlue);
 		// Label f = (Label) createFigureForModel();
-		Label f = new Label();
 
-		f.setOpaque(true); // non-transparent figure
+		// PaletteDrawer root = ShapesEditorPaletteFactory.getPaletteDrawer();
+		// PaletteComponent comp = ShapesEditorPaletteFactory.selectedComponent;
+		// ActorRootElement rootelement = comp.getData();
+		// List chldren = root.getChildren();
+
+		ActorFigure f = new ActorFigure();
+		RectangularShape shape = (RectangularShape) getModel();
+
+		ActorRootElement root = shape.getData();
+		Collection<PortElement> col = root.getPort();
+		Iterator<PortElement> it = col.iterator();
+		String portName = "";
+		while (it.hasNext()) {
+			portName = it.next().getName();
+		}
+
+		// f.setOpaque(true); // non-transparent figure
 		// TODO: Hier die Farbe aus dem geparsten xml rein!!!!!!!!!!!!!!!!
-		f.setBackgroundColor(ColorConstants.lightBlue);
-		f.setLabelAlignment(PositionConstants.TOP);
-		f.setTextAlignment(PositionConstants.TOP);
-		f.setText("CPUSCHEDULER");
+		// f.setBackgroundColor(ColorConstants.lightBlue);
+		// f.setLabelAlignment(PositionConstants.TOP);
+		// f.setTextAlignment(PositionConstants.TOP);
+		// f.setText("ELEMENT");
 		f.setVisible(true);
 
-		Ellipse e = new Ellipse();
-		e.setOpaque(true);
-		e.setBackgroundColor(ColorConstants.red);
-		e.setVisible(true);
-		e.setSize(20, 20);
+		f.setPort1(portName);
+		f.setPort2("port2");
 
-		f.add(e);
+		// Ellipse e = new Ellipse();
+		// e.setOpaque(true);
+		// e.setBackgroundColor(ColorConstants.red);
+		// e.setVisible(true);
+		// e.setSize(20, 20);
+		//
+		// f.add(e);
 		return f;
-	}
-
-	@SuppressWarnings("unused")
-	private void getSelectedComponent() {
-		@SuppressWarnings({ "rawtypes" })
-		List children = ShapesEditorPaletteFactory.getPaletteDrawer()
-				.getChildren();
-		for (int i = 0; i < children.size(); i++)
-			System.out.println(children.get(i));
-
 	}
 
 	// /**
@@ -342,4 +351,5 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 		((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(),
 				bounds);
 	}
+
 }

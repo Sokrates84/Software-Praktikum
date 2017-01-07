@@ -46,11 +46,8 @@ import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.dnd.TemplateTransferDragSourceListener;
-import org.eclipse.gef.dnd.TemplateTransferDropTargetListener;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.gef.palette.PaletteRoot;
-import org.eclipse.gef.requests.CreationFactory;
-import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.palette.PaletteViewerProvider;
@@ -61,7 +58,8 @@ import org.eclipse.gef.ui.parts.TreeViewer;
 
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 import org.eclipse.gef.examples.shapes.parts.ShapesEditPartFactory;
-import org.eclipse.gef.examples.shapes.parts.ShapesTreeEditPartFactory;
+
+import listeners.CustomTemplateTransferDropTargetListener;
 
 /**
  * A graphical editor with flyout palette that can edit .shapes files. The
@@ -101,6 +99,9 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 		viewer.setEditPartFactory(new ShapesEditPartFactory());
 		viewer.setRootEditPart(new ScalableFreeformRootEditPart());
 		viewer.setKeyHandler(new GraphicalViewerKeyHandler(viewer));
+
+		// TODO: Vielleicht hilft das hier bei der Selektion der Parts!?
+		// viewer.setSelectionManager(SelectionManager.createDefault());
 
 		// configure the context menu provider
 		ContextMenuProvider cmProvider = new ShapesEditorContextMenuProvider(
@@ -146,6 +147,7 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 				// @see ShapesEditor#createTransferDropTargetListener()
 				viewer.addDragSourceListener(
 						new TemplateTransferDragSourceListener(viewer));
+
 			}
 		};
 	}
@@ -157,12 +159,17 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 	 * 
 	 * @see #createPaletteViewerProvider()
 	 */
+	// private TransferDropTargetListener createTransferDropTargetListener() {
+	// return new TemplateTransferDropTargetListener(getGraphicalViewer()) {
+	// protected CreationFactory getFactory(Object template) {
+	// return new SimpleFactory((Class) template);
+	// }
+	// };
+	// }
+	//
 	private TransferDropTargetListener createTransferDropTargetListener() {
-		return new TemplateTransferDropTargetListener(getGraphicalViewer()) {
-			protected CreationFactory getFactory(Object template) {
-				return new SimpleFactory((Class) template);
-			}
-		};
+		return new CustomTemplateTransferDropTargetListener(
+				getGraphicalViewer());
 	}
 
 	/*
@@ -324,6 +331,7 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 		}
 	}
 
+	// TODO: DAS HIER IST NICHT NÖTIG. KANN GELÖSCHT WERDEN!!!!!
 	/**
 	 * Creates an outline pagebook for this editor.
 	 */
@@ -351,7 +359,7 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 			getViewer().createControl(parent);
 			// configure outline viewer
 			getViewer().setEditDomain(getEditDomain());
-			getViewer().setEditPartFactory(new ShapesTreeEditPartFactory());
+			// getViewer().setEditPartFactory(new ShapesTreeEditPartFactory());
 			// configure & add context menu to viewer
 			ContextMenuProvider cmProvider = new ShapesEditorContextMenuProvider(
 					getViewer(), getActionRegistry());

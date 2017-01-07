@@ -23,11 +23,12 @@ import org.eclipse.gef.palette.PaletteToolbar;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.requests.CreationFactory;
-import org.eclipse.gef.requests.SimpleFactory;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.xml.ActorRootElement;
+
+import creationFactory.ActorCreationFactory;
 
 /**
  * Utility class that can create a GEF Palette.
@@ -36,6 +37,8 @@ import org.eclipse.gef.examples.xml.ActorRootElement;
  * @author Elias Volanakis
  */
 public class ShapesEditorPaletteFactory {
+
+	public static PaletteComponent selectedComponent;
 
 	// private static Map<String, CombinedTemplateCreationEntry> palleteEntryMap
 	// = new HashMap<>();
@@ -50,18 +53,32 @@ public class ShapesEditorPaletteFactory {
 				.entrySet()) {
 			// if (!palleteEntryMap.containsKey(entry.getKey())) {
 
+			// PaletteComponent component = new PaletteComponent(
+			// entry.getValue().getType(),
+			// "Create an:" + " " + entry.getValue().getName(),
+			// RectangularShape.class,
+			// ImageDescriptor.createFromFile(ShapesPlugin.class,
+			// "icons/roundRectangle.png"),
+			// ImageDescriptor.createFromFile(ShapesPlugin.class,
+			// "icons/roundRectangle.png"));
+
+			RectangularShape shape = new RectangularShape();
+			shape.setData(entry.getValue());
+
 			PaletteComponent component = new PaletteComponent(
 					entry.getValue().getType(),
 					"Create an:" + " " + entry.getValue().getName(),
 					RectangularShape.class,
-					new SimpleFactory(RectangularShape.class),
+					new ActorCreationFactory(RectangularShape.class, shape),
 					ImageDescriptor.createFromFile(ShapesPlugin.class,
 							"icons/roundRectangle.png"),
 					ImageDescriptor.createFromFile(ShapesPlugin.class,
 							"icons/roundRectangle.png"));
-			PALETTE_DRAWER.add(component);
 
 			component.setData(entry.getValue());
+
+			PALETTE_DRAWER.add(component);
+
 			// palleteEntryMap.put(entry.getKey(), component);
 			// }
 
@@ -146,6 +163,14 @@ public class ShapesEditorPaletteFactory {
 	/** Utility class. */
 	private ShapesEditorPaletteFactory() {
 		// Utility class
+	}
+
+	public static PaletteComponent getSelectedComponent() {
+		return selectedComponent;
+	}
+
+	public static void setSelectedComponent(PaletteComponent s) {
+		selectedComponent = s;
 	}
 
 }
