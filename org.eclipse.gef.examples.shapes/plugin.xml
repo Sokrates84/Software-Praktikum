@@ -99,5 +99,46 @@
          </defaultHandler>
       </command>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs contributorId="TestsView">
+         <propertyTab
+               category="first"
+               id="propertyTab1"
+               indented="false"
+               label="Name">
+         </propertyTab>
+         <propertyTab
+               afterTab="propertyTab1"
+               category="first"
+               id="propertyTab2"
+               label="Project">
+         </propertyTab>
+         <propertyTab
+               category="second"
+               id="propertyTab3"
+               label="Message">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="SamplePropertiesView">
+         <propertyCategory></propertyCategory>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="propertySection">
+         <propertySection
+               class="PropertySectionFilter"
+               id="propertyTab1"
+               tab="propertyTab1">
+         </propertySection>
+      </propertySections>
+   </extension>
 
 </plugin>

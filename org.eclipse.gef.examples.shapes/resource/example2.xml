@@ -1,6 +1,6 @@
 <actor name="CPU Scheduler" type="CPUSCHEDULER" ID="0"> 
 	<port name="interruptsScheduler" multiport="false" width="1" type="inputport"> 
-		<graphical color="123,215,128" index="1" alignment="West" /> 
+		<graphical color="123,215,128" index="1" alignment="East" /> 
 	</port> 
 	<port name="toPeripheralsScheduler" multiport="false" width="1" type="outputport"> 
 		<graphical color="123,215,128" index="2" alignment="West" /> 

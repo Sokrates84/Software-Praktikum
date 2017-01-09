@@ -46,8 +46,7 @@ import org.eclipse.gef.examples.xml.PortElement;
 import figure.ActorFigure;
 
 /**
- * EditPart used for Shape instances (more specific for EllipticalShape and
- * RectangularShape instances).
+ * EditPart used for RectangularShape instances.
  * <p>
  * This edit part must implement the PropertyChangeListener interface, so it can
  * be notified of property changes in the corresponding model element.
@@ -197,6 +196,8 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 
 		f.setPort1(portName);
 		f.setPort2("port2");
+		f.setPort3("port3");
+		f.setPort4("port4");
 
 		// Ellipse e = new Ellipse();
 		// e.setOpaque(true);

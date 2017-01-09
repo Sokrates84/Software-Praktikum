@@ -39,7 +39,9 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IPageSite;
-import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
@@ -54,7 +56,6 @@ import org.eclipse.gef.ui.palette.PaletteViewerProvider;
 import org.eclipse.gef.ui.parts.ContentOutlinePage;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
-import org.eclipse.gef.ui.parts.TreeViewer;
 
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 import org.eclipse.gef.examples.shapes.parts.ShapesEditPartFactory;
@@ -68,12 +69,15 @@ import listeners.CustomTemplateTransferDropTargetListener;
  * 
  * @author Elias Volanakis
  */
-public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
+public class ShapesEditor extends GraphicalEditorWithFlyoutPalette
+		implements ITabbedPropertySheetPageContributor {
 
 	/** This is the root of the editor's model. */
 	private ShapesDiagram diagram;
 	/** Palette component, holding the tools and shapes. */
 	private static PaletteRoot PALETTE_MODEL;
+
+	private TabbedPropertySheetPage tabbedPropertySheetPage;
 
 	/** Create a new ShapesEditor instance. This is called by the Workspace. */
 	public ShapesEditor() {
@@ -258,8 +262,8 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 	}
 
 	public Object getAdapter(Class type) {
-		if (type == IContentOutlinePage.class)
-			return new ShapesOutlinePage(new TreeViewer());
+		if (type == IPropertySheetPage.class)
+			return tabbedPropertySheetPage;
 		return super.getAdapter(type);
 	}
 
@@ -298,6 +302,8 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 
 		// listen for dropped parts
 		viewer.addDropTargetListener(createTransferDropTargetListener());
+		tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
+
 	}
 
 	/*
@@ -413,6 +419,11 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette {
 
 	public Shell getShell() {
 		return getSite().getWorkbenchWindow().getShell();
+	}
+
+	@Override
+	public String getContributorId() {
+		return getSite().getId();
 	}
 
 }
