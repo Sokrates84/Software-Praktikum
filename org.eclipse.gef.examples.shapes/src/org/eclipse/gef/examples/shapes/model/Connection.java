@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model;
 
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
@@ -37,7 +37,9 @@ public class Connection extends ModelElement {
 	 */
 	public static final Integer DASHED_CONNECTION = new Integer(
 			Graphics.LINE_DASH);
-	/** Property ID to use when the line style of this connection is modified. */
+	/**
+	 * Property ID to use when the line style of this connection is modified.
+	 */
 	public static final String LINESTYLE_PROP = "LineStyle";
 	private static final IPropertyDescriptor[] descriptors = new IPropertyDescriptor[1];
 	private static final String SOLID_STR = "Solid";
@@ -49,9 +51,9 @@ public class Connection extends ModelElement {
 	/** Line drawing style for this connection. */
 	private int lineStyle = Graphics.LINE_SOLID;
 	/** Connection's source endpoint. */
-	private Shape source;
+	private RectangularShape source;
 	/** Connection's target endpoint. */
-	private Shape target;
+	private RectangularShape target;
 
 	static {
 		descriptors[0] = new ComboBoxPropertyDescriptor(LINESTYLE_PROP,
@@ -69,7 +71,7 @@ public class Connection extends ModelElement {
 	 *             if any of the parameters are null or source == target
 	 * @see #setLineStyle(int)
 	 */
-	public Connection(Shape source, Shape target) {
+	public Connection(RectangularShape source, RectangularShape target) {
 		reconnect(source, target);
 	}
 
@@ -123,7 +125,7 @@ public class Connection extends ModelElement {
 	 * 
 	 * @return a non-null Shape instance
 	 */
-	public Shape getSource() {
+	public RectangularShape getSource() {
 		return source;
 	}
 
@@ -132,7 +134,7 @@ public class Connection extends ModelElement {
 	 * 
 	 * @return a non-null Shape instance
 	 */
-	public Shape getTarget() {
+	public RectangularShape getTarget() {
 		return target;
 	}
 
@@ -160,7 +162,8 @@ public class Connection extends ModelElement {
 	 * @throws IllegalArgumentException
 	 *             if any of the paramers are null or newSource == newTarget
 	 */
-	public void reconnect(Shape newSource, Shape newTarget) {
+	public void reconnect(RectangularShape newSource,
+			RectangularShape newTarget) {
 		if (newSource == null || newTarget == null || newSource == newTarget) {
 			throw new IllegalArgumentException();
 		}
@@ -182,7 +185,8 @@ public class Connection extends ModelElement {
 	 *             if lineStyle does not have one of the above values
 	 */
 	public void setLineStyle(int lineStyle) {
-		if (lineStyle != Graphics.LINE_DASH && lineStyle != Graphics.LINE_SOLID) {
+		if (lineStyle != Graphics.LINE_DASH
+				&& lineStyle != Graphics.LINE_SOLID) {
 			throw new IllegalArgumentException();
 		}
 		this.lineStyle = lineStyle;

@@ -11,98 +11,77 @@
 
 package figure;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 
-import logic.ActorFigureBorder;
+import org.eclipse.gef.examples.xml.ActorRootElement;
+import org.eclipse.gef.examples.xml.PortElement;
 
 public class ActorFigure extends Figure {
+	ActorRootElement data;
 
-	private Label name = new Label();
-	private Label port1 = new Label();
-	private Label port2 = new Label();
-	private Label port3 = new Label();
-	private Label port4 = new Label();
+	Label name;
+	List<Label> portLabels;
+	List<Label> propertylabels;
+
 	private XYLayout layout;
+	private int x = 5;
+	private int y = 15;
+	private int width = -1;
+	private int height = -1;
 
-	public ActorFigure() {
+	public ActorFigure(ActorRootElement data) {
+		this.data = data;
 
-		BorderLayout b = new BorderLayout();
-
-		GridLayout g = new GridLayout();
-		g.numColumns = 2;
-		// g.horizontalSpacing = 4;
-		g.verticalSpacing = 2;
-		// --------------------------------------------------------------------
 		layout = new XYLayout();
 		setLayoutManager(layout);
-		setBorder(new ActorFigureBorder());
 
-		port1.setForegroundColor(ColorConstants.blue);
-		port2.setForegroundColor(ColorConstants.black);
-		port3.setForegroundColor(ColorConstants.red);
-		port4.setForegroundColor(ColorConstants.green);
-
-		Rectangle r = getBounds();
-
-		add(port1);
-		setConstraint(port1, new Rectangle(5, 5, -1, -1));
-		add(port2);
-		setConstraint(port2, new Rectangle(5, 20, -1, -1));
-		add(port3);
-		setConstraint(port3, new Rectangle(5, 35, -1, -1));
-		add(port4);
-		setConstraint(port4, new Rectangle(5, 50, -1, -1));
-
-		// --------------------------------------------------------------------
-		// Figure r = new Figure();
-		// r.setLayoutManager(g);
-		//
-		// setBorder(new ActorFigureBorder());
-		// setLayoutManager(b);
-		//
-		// add(port1, BorderLayout.TOP);
-		// add(r, BorderLayout.CENTER);
-		//
-		// port1.setForegroundColor(ColorConstants.blue);
-		// port2.setForegroundColor(ColorConstants.black);
-		// port3.setForegroundColor(ColorConstants.red);
-		// port4.setForegroundColor(ColorConstants.green);
-		//
-		// r.add(port2, new GridData(0, SWT.BEGINNING, true, false));
-		// r.add(port3, new GridData(0, SWT.END, false, false));
-		// r.add(port4, new GridData(0, SWT.BEGINNING, true, false));
-		//
-		List children = getChildren();
-		System.out.println();
+		addName();
+		addPorts();
+		setBorder(new MarginBorder(5));
+		setBackgroundColor(ColorConstants.lightGray);
+		setOpaque(true);
 
 	}
 
-	public void setPort1(String port1) {
-		this.port1.setText(port1);
+	private void addName() {
+		name = new Label();
+		name.setForegroundColor(ColorConstants.black);
+		name.setText(data.getName());
+		add(name);
+		setConstraint(name, new Rectangle(x, y, width, height));
+		y = y + 15;
 	}
 
-	public void setPort2(String port2) {
-		this.port2.setText(port2);
+	private void addPorts() {
+		Collection<PortElement> elements = data.getPort();
+		portLabels = new ArrayList<>();
+
+		for (PortElement port : elements) {
+			Label label = new Label();
+			label.setForegroundColor(ColorConstants.black);
+			label.setText(port.getName());
+			add(label);
+			setConstraint(label, new Rectangle(x, y, width, height));
+			y = y + 15;
+			portLabels.add(label);
+		}
+
 	}
 
-	public void setPort3(String port3) {
-		this.port3.setText(port3);
+	public Label getLabel(String labelName) {
+		for (Label label : portLabels) {
+			if (label.getText().equals(labelName))
+				return label;
+		}
+		return null;
 	}
-
-	public void setPort4(String port4) {
-		this.port4.setText(port4);
-	}
-
-	public void setLayout(XYLayout layout) {
-		this.layout = layout;
-	}
-
 }

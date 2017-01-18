@@ -53,15 +53,6 @@ public class ShapesEditorPaletteFactory {
 				.entrySet()) {
 			// if (!palleteEntryMap.containsKey(entry.getKey())) {
 
-			// PaletteComponent component = new PaletteComponent(
-			// entry.getValue().getType(),
-			// "Create an:" + " " + entry.getValue().getName(),
-			// RectangularShape.class,
-			// ImageDescriptor.createFromFile(ShapesPlugin.class,
-			// "icons/roundRectangle.png"),
-			// ImageDescriptor.createFromFile(ShapesPlugin.class,
-			// "icons/roundRectangle.png"));
-
 			RectangularShape shape = new RectangularShape();
 			shape.setData(entry.getValue());
 

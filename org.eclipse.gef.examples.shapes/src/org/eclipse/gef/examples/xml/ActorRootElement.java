@@ -45,4 +45,24 @@ public class ActorRootElement {
 		return ID;
 	}
 
+	public void setPort(Collection<PortElement> port) {
+		this.port = port;
+	}
+
+	public void setProperty(Collection<PropertyElement> property) {
+		this.property = property;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
 }

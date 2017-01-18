@@ -15,7 +15,7 @@ import java.util.Iterator;
 import org.eclipse.gef.commands.Command;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
-import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 
 /**
  * A command to create a connection between two shapes. The command can be
@@ -45,9 +45,9 @@ public class ConnectionCreateCommand extends Command {
 	private final int lineStyle;
 
 	/** Start endpoint for the connection. */
-	private final Shape source;
+	private final RectangularShape source;
 	/** Target endpoint for the connection. */
-	private Shape target;
+	private RectangularShape target;
 
 	/**
 	 * Instantiate a command that can create a connection between two shapes.
@@ -61,7 +61,7 @@ public class ConnectionCreateCommand extends Command {
 	 *             if source is null
 	 * @see Connection#setLineStyle(int)
 	 */
-	public ConnectionCreateCommand(Shape source, int lineStyle) {
+	public ConnectionCreateCommand(RectangularShape source, int lineStyle) {
 		if (source == null) {
 			throw new IllegalArgumentException();
 		}
@@ -81,8 +81,8 @@ public class ConnectionCreateCommand extends Command {
 			return false;
 		}
 		// return false, if the source -> target connection exists already
-		for (Iterator iter = source.getSourceConnections().iterator(); 
-				iter.hasNext();) {
+		for (Iterator iter = source.getSourceConnections().iterator(); iter
+				.hasNext();) {
 			Connection conn = (Connection) iter.next();
 			if (conn.getTarget().equals(target)) {
 				return false;
@@ -120,7 +120,7 @@ public class ConnectionCreateCommand extends Command {
 	 * @throws IllegalArgumentException
 	 *             if target is null
 	 */
-	public void setTarget(Shape target) {
+	public void setTarget(RectangularShape target) {
 		if (target == null) {
 			throw new IllegalArgumentException();
 		}

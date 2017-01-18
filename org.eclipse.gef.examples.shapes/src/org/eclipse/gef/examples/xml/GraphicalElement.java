@@ -1,13 +1,10 @@
 
 package org.eclipse.gef.examples.xml;
 
-import java.util.List;
-
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name="graphical")
+@Root(name = "graphical")
 public class GraphicalElement {
 
 	@Attribute
@@ -31,5 +28,16 @@ public class GraphicalElement {
 		return alignment;
 	}
 
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public void setIndex(String index) {
+		this.index = index;
+	}
+
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
+	}
 
 }
