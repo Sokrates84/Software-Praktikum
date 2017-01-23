@@ -47,20 +47,4 @@ public class CustomTemplateTransferDragSourceListener
 		return null;
 	}
 
-	// @Override
-	// protected Object getTemplate() {
-	// RectangularShape entry = new RectangularShape();
-	// List selection = getViewer().getSelectedEditParts();
-	// if (selection.size() == 1) {
-	// EditPart editpart = (EditPart) getViewer().getSelectedEditParts()
-	// .get(0);
-	// PaletteComponent model = (PaletteComponent) editpart.getModel();
-	//
-	// entry.setData(model.getData());
-	// return model;
-	// }
-	//
-	// return null;
-	// }
-
 }

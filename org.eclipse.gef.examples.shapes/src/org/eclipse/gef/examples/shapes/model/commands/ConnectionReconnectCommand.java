@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model.commands;
 
 import java.util.Iterator;
@@ -15,7 +15,7 @@ import java.util.Iterator;
 import org.eclipse.gef.commands.Command;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
-import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 
 /**
  * A command to reconnect a connection to a different start point or end point.
@@ -31,8 +31,8 @@ import org.eclipse.gef.examples.shapes.model.Shape;
  * a new ConnectionReconnectCommand, set the new connection <i>source</i> by
  * calling the <tt>setNewSource(Shape)</tt> method and return the command
  * instance.
- * <li>Override the <tt>getReconnectTargetCommand(...)</tt> method.</li>
- * Here again you need to obtain the Connection model element from the
+ * <li>Override the <tt>getReconnectTargetCommand(...)</tt> method.</li> Here
+ * again you need to obtain the Connection model element from the
  * ReconnectRequest, create a new ConnectionReconnectCommand, set the new
  * connection <i>target</i> by calling the <tt>setNewTarget(Shape)</tt> method
  * and return the command instance.</li>
@@ -50,13 +50,13 @@ public class ConnectionReconnectCommand extends Command {
 	/** The connection instance to reconnect. */
 	private Connection connection;
 	/** The new source endpoint. */
-	private Shape newSource;
+	private RectangularShape newSource;
 	/** The new target endpoint. */
-	private Shape newTarget;
+	private RectangularShape newTarget;
 	/** The original source endpoint. */
-	private final Shape oldSource;
+	private final RectangularShape oldSource;
 	/** The original target endpoint. */
-	private final Shape oldTarget;
+	private final RectangularShape oldTarget;
 
 	/**
 	 * Instantiate a command that can reconnect a Connection instance to a
@@ -106,7 +106,8 @@ public class ConnectionReconnectCommand extends Command {
 			// return false if a newSource -> oldTarget connection exists
 			// already
 			// and it is a different instance than the connection-field
-			if (conn.getTarget().equals(oldTarget) && !conn.equals(connection)) {
+			if (conn.getTarget().equals(oldTarget)
+					&& !conn.equals(connection)) {
 				return false;
 			}
 		}
@@ -129,7 +130,8 @@ public class ConnectionReconnectCommand extends Command {
 			// return false if a oldSource -> newTarget connection exists
 			// already
 			// and it is a differenct instance that the connection-field
-			if (conn.getSource().equals(oldSource) && !conn.equals(connection)) {
+			if (conn.getSource().equals(oldSource)
+					&& !conn.equals(connection)) {
 				return false;
 			}
 		}
@@ -165,7 +167,7 @@ public class ConnectionReconnectCommand extends Command {
 	 * @throws IllegalArgumentException
 	 *             if connectionSource is null
 	 */
-	public void setNewSource(Shape connectionSource) {
+	public void setNewSource(RectangularShape connectionSource) {
 		if (connectionSource == null) {
 			throw new IllegalArgumentException();
 		}
@@ -189,7 +191,7 @@ public class ConnectionReconnectCommand extends Command {
 	 * @throws IllegalArgumentException
 	 *             if connectionTarget is null
 	 */
-	public void setNewTarget(Shape connectionTarget) {
+	public void setNewTarget(RectangularShape connectionTarget) {
 		if (connectionTarget == null) {
 			throw new IllegalArgumentException();
 		}

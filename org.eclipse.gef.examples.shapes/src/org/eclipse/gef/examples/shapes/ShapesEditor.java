@@ -39,7 +39,6 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IPageSite;
-import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -259,12 +258,6 @@ public class ShapesEditor extends GraphicalEditorWithFlyoutPalette
 				ite.printStackTrace();
 			}
 		}
-	}
-
-	public Object getAdapter(Class type) {
-		if (type == IPropertySheetPage.class)
-			return tabbedPropertySheetPage;
-		return super.getAdapter(type);
 	}
 
 	ShapesDiagram getModel() {

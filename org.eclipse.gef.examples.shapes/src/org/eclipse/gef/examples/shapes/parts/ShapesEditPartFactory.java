@@ -14,7 +14,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
-import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 
 /**
@@ -49,7 +49,7 @@ public class ShapesEditPartFactory implements EditPartFactory {
 		if (modelElement instanceof ShapesDiagram) {
 			return new DiagramEditPart();
 		}
-		if (modelElement instanceof Shape) {
+		if (modelElement instanceof RectangularShape) {
 			return new ShapeEditPart();
 		}
 		if (modelElement instanceof Connection) {

@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model.commands;
 
 import java.util.Iterator;
@@ -16,7 +16,7 @@ import java.util.List;
 import org.eclipse.gef.commands.Command;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
-import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 
 /**
@@ -27,7 +27,7 @@ import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
  */
 public class ShapeDeleteCommand extends Command {
 	/** Shape to remove. */
-	private final Shape child;
+	private final RectangularShape child;
 
 	/** ShapeDiagram to remove from. */
 	private final ShapesDiagram parent;
@@ -48,7 +48,7 @@ public class ShapeDeleteCommand extends Command {
 	 * @throws IllegalArgumentException
 	 *             if any parameter is null
 	 */
-	public ShapeDeleteCommand(ShapesDiagram parent, Shape child) {
+	public ShapeDeleteCommand(ShapesDiagram parent, RectangularShape child) {
 		if (parent == null || child == null) {
 			throw new IllegalArgumentException();
 		}

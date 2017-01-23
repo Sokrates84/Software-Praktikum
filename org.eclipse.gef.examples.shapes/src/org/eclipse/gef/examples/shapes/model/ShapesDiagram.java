@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ShapesDiagram extends ModelElement {
 	 *            a non-null shape instance
 	 * @return true, if the shape was added, false otherwise
 	 */
-	public boolean addChild(Shape s) {
+	public boolean addChild(RectangularShape s) {
 		if (s != null && shapes.add(s)) {
 			firePropertyChange(CHILD_ADDED_PROP, null, s);
 			return true;
@@ -58,7 +58,7 @@ public class ShapesDiagram extends ModelElement {
 	 *            a non-null shape instance;
 	 * @return true, if the shape was removed, false otherwise
 	 */
-	public boolean removeChild(Shape s) {
+	public boolean removeChild(RectangularShape s) {
 		if (s != null && shapes.remove(s)) {
 			firePropertyChange(CHILD_REMOVED_PROP, null, s);
 			return true;

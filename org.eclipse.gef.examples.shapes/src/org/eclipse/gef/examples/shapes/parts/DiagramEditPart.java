@@ -28,7 +28,6 @@ import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gef.examples.shapes.PaletteComponent;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
-import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.ShapesDiagram;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ShapeSetConstraintCommand;
@@ -159,8 +158,9 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 			if (child instanceof ShapeEditPart
 					&& constraint instanceof Rectangle) {
 				// return a command that can move and/or resize a Shape
-				return new ShapeSetConstraintCommand((Shape) child.getModel(),
-						request, (Rectangle) constraint);
+				return new ShapeSetConstraintCommand(
+						(RectangularShape) child.getModel(), request,
+						(Rectangle) constraint);
 			}
 			return super.createChangeConstraintCommand(request, child,
 					constraint);
@@ -190,10 +190,10 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 			PaletteComponent paletteComponent = (PaletteComponent) request
 					.getNewObject();
 
-			RectangularShape shape = new RectangularShape();
-			shape.setData(paletteComponent.getData());
+			RectangularShape shape = new RectangularShape(
+					paletteComponent.getData());
 
-			return new ShapeCreateCommand((Shape) shape,
+			return new ShapeCreateCommand((RectangularShape) shape,
 					(ShapesDiagram) getHost().getModel(),
 					(Rectangle) getConstraintFor(request));
 

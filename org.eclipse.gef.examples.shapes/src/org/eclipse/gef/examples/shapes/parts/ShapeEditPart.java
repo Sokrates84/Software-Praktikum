@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ConnectionAnchor;
-import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 
@@ -34,10 +33,8 @@ import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
 import org.eclipse.gef.examples.shapes.model.Connection;
-import org.eclipse.gef.examples.shapes.model.EllipticalShape;
 import org.eclipse.gef.examples.shapes.model.ModelElement;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
-import org.eclipse.gef.examples.shapes.model.Shape;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionReconnectCommand;
 import org.eclipse.gef.examples.xml.ActorRootElement;
@@ -96,7 +93,7 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 							CreateConnectionRequest request) {
 						ConnectionCreateCommand cmd = (ConnectionCreateCommand) request
 								.getStartCommand();
-						cmd.setTarget((Shape) getHost().getModel());
+						cmd.setTarget((RectangularShape) getHost().getModel());
 						return cmd;
 					}
 
@@ -110,7 +107,8 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 					 */
 					protected Command getConnectionCreateCommand(
 							CreateConnectionRequest request) {
-						Shape source = (Shape) getHost().getModel();
+						RectangularShape source = (RectangularShape) getHost()
+								.getModel();
 						int style = ((Integer) request.getNewObjectType())
 								.intValue();
 						ConnectionCreateCommand cmd = new ConnectionCreateCommand(
@@ -131,7 +129,8 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 							ReconnectRequest request) {
 						Connection conn = (Connection) request
 								.getConnectionEditPart().getModel();
-						Shape newSource = (Shape) getHost().getModel();
+						RectangularShape newSource = (RectangularShape) getHost()
+								.getModel();
 						ConnectionReconnectCommand cmd = new ConnectionReconnectCommand(
 								conn);
 						cmd.setNewSource(newSource);
@@ -150,7 +149,8 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 							ReconnectRequest request) {
 						Connection conn = (Connection) request
 								.getConnectionEditPart().getModel();
-						Shape newTarget = (Shape) getHost().getModel();
+						RectangularShape newTarget = (RectangularShape) getHost()
+								.getModel();
 						ConnectionReconnectCommand cmd = new ConnectionReconnectCommand(
 								conn);
 						cmd.setNewTarget(newTarget);
@@ -237,15 +237,13 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 		}
 	}
 
-	private Shape getCastedModel() {
-		return (Shape) getModel();
+	private RectangularShape getCastedModel() {
+		return (RectangularShape) getModel();
 	}
 
 	protected ConnectionAnchor getConnectionAnchor() {
 		if (anchor == null) {
-			if (getModel() instanceof EllipticalShape)
-				anchor = new EllipseAnchor(getFigure());
-			else if (getModel() instanceof RectangularShape) {
+			if (getModel() instanceof RectangularShape) {
 				// anchor = new LabelAnchor((Label) getFigure());
 				// anchor = new RoundedRectangleAnchor(null, null);
 				anchor = new ChopboxAnchor(getFigure());
@@ -331,11 +329,12 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String prop = evt.getPropertyName();
-		if (Shape.SIZE_PROP.equals(prop) || Shape.LOCATION_PROP.equals(prop)) {
+		if (RectangularShape.SIZE_PROP.equals(prop)
+				|| RectangularShape.LOCATION_PROP.equals(prop)) {
 			refreshVisuals();
-		} else if (Shape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
+		} else if (RectangularShape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
 			refreshSourceConnections();
-		} else if (Shape.TARGET_CONNECTIONS_PROP.equals(prop)) {
+		} else if (RectangularShape.TARGET_CONNECTIONS_PROP.equals(prop)) {
 			refreshTargetConnections();
 		}
 	}

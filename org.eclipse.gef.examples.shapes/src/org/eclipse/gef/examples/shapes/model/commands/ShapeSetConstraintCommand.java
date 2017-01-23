@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2005 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
+ï¿½* All rights reserved. This program and the accompanying materials
+ï¿½* are made available under the terms of the Eclipse Public License v1.0
+ï¿½* which accompanies this distribution, and is available at
+ï¿½* http://www.eclipse.org/legal/epl-v10.html
+ï¿½*
+ï¿½* Contributors:
+ï¿½*ï¿½ï¿½ï¿½ï¿½Elias Volanakis - initial API and implementation
+ï¿½*******************************************************************************/
 package org.eclipse.gef.examples.shapes.model.commands;
 
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -16,7 +16,7 @@ import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
-import org.eclipse.gef.examples.shapes.model.Shape;
+import org.eclipse.gef.examples.shapes.model.RectangularShape;
 
 /**
  * A command to resize and/or move a shape. The command can be undone or redone.
@@ -32,7 +32,7 @@ public class ShapeSetConstraintCommand extends Command {
 	private final ChangeBoundsRequest request;
 
 	/** Shape to manipulate. */
-	private final Shape shape;
+	private final RectangularShape shape;
 
 	/**
 	 * Create a command that can resize and/or move a shape.
@@ -46,8 +46,8 @@ public class ShapeSetConstraintCommand extends Command {
 	 * @throws IllegalArgumentException
 	 *             if any of the parameters is null
 	 */
-	public ShapeSetConstraintCommand(Shape shape, ChangeBoundsRequest req,
-			Rectangle newBounds) {
+	public ShapeSetConstraintCommand(RectangularShape shape,
+			ChangeBoundsRequest req, Rectangle newBounds) {
 		if (shape == null || req == null || newBounds == null) {
 			throw new IllegalArgumentException();
 		}
@@ -67,8 +67,8 @@ public class ShapeSetConstraintCommand extends Command {
 		// make sure the Request is of a type we support:
 		return (RequestConstants.REQ_MOVE.equals(type)
 				|| RequestConstants.REQ_MOVE_CHILDREN.equals(type)
-				|| RequestConstants.REQ_RESIZE.equals(type) || RequestConstants.REQ_RESIZE_CHILDREN
-				.equals(type));
+				|| RequestConstants.REQ_RESIZE.equals(type)
+				|| RequestConstants.REQ_RESIZE_CHILDREN.equals(type));
 	}
 
 	/*

@@ -18,10 +18,10 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.LineBorder;
+import org.eclipse.draw2d.SimpleRaisedBorder;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
-
-import logic.ActorFigureBorder;
 
 public class ActorFigure extends Figure {
 
@@ -43,7 +43,9 @@ public class ActorFigure extends Figure {
 		// --------------------------------------------------------------------
 		layout = new XYLayout();
 		setLayoutManager(layout);
-		setBorder(new ActorFigureBorder());
+		SimpleRaisedBorder srb = new SimpleRaisedBorder();
+
+		setBorder(new LineBorder());
 
 		port1.setForegroundColor(ColorConstants.blue);
 		port2.setForegroundColor(ColorConstants.black);
