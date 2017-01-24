@@ -12,8 +12,6 @@ package org.eclipse.gef.examples.shapes.parts;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ChopboxAnchor;
@@ -37,8 +35,6 @@ import org.eclipse.gef.examples.shapes.model.ModelElement;
 import org.eclipse.gef.examples.shapes.model.RectangularShape;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionCreateCommand;
 import org.eclipse.gef.examples.shapes.model.commands.ConnectionReconnectCommand;
-import org.eclipse.gef.examples.xml.ActorRootElement;
-import org.eclipse.gef.examples.xml.PortElement;
 
 import figure.ActorFigure;
 
@@ -55,6 +51,7 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 		implements PropertyChangeListener, NodeEditPart {
 
 	private ConnectionAnchor anchor;
+	private PropertyChangeEvent evt;
 
 	/**
 	 * Upon activation, attach to the model element as a property change
@@ -165,66 +162,12 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#createFigure()
 	 */
 	protected IFigure createFigure() {
-		// InlineFlow f = (InlineFlow) createFigureForModel();
-		// f.setOpaque(true);
-		// f.setBackgroundColor(ColorConstants.lightBlue);
-		// Label f = (Label) createFigureForModel();
-
-		// PaletteDrawer root = ShapesEditorPaletteFactory.getPaletteDrawer();
-		// PaletteComponent comp = ShapesEditorPaletteFactory.selectedComponent;
-		// ActorRootElement rootelement = comp.getData();
-		// List chldren = root.getChildren();
-
-		ActorFigure f = new ActorFigure();
 		RectangularShape shape = (RectangularShape) getModel();
+		ActorFigure figure = new ActorFigure(shape.getData());
+		figure.setVisible(true);
 
-		ActorRootElement root = shape.getData();
-		Collection<PortElement> col = root.getPort();
-		Iterator<PortElement> it = col.iterator();
-		String portName = "";
-		while (it.hasNext()) {
-			portName = it.next().getName();
-		}
-
-		// f.setOpaque(true); // non-transparent figure
-		// TODO: Hier die Farbe aus dem geparsten xml rein!!!!!!!!!!!!!!!!
-		// f.setBackgroundColor(ColorConstants.lightBlue);
-		// f.setLabelAlignment(PositionConstants.TOP);
-		// f.setTextAlignment(PositionConstants.TOP);
-		// f.setText("ELEMENT");
-		f.setVisible(true);
-
-		f.setPort1(portName);
-		f.setPort2("port2");
-		f.setPort3("port3");
-		f.setPort4("port4");
-
-		// Ellipse e = new Ellipse();
-		// e.setOpaque(true);
-		// e.setBackgroundColor(ColorConstants.red);
-		// e.setVisible(true);
-		// e.setSize(20, 20);
-		//
-		// f.add(e);
-		return f;
+		return figure;
 	}
-
-	// /**
-	// * Return a IFigure depending on the instance of the current model
-	// element.
-	// * This allows this EditPart to be used for both sublasses of Shape.
-	// */
-	// private IFigure createFigureForModel() {
-	// if (getModel() instanceof EllipticalShape) {
-	// return new Ellipse();
-	// } else if (getModel() instanceof RectangularShape) {
-	// return new Label();
-	// // return new RoundedRectangle();
-	// } else {
-	// // if Shapes gets extended the conditions above must be updated
-	// throw new IllegalArgumentException();
-	// }
-	// }
 
 	/**
 	 * Upon deactivation, detach from the model element as a property change
@@ -329,8 +272,10 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String prop = evt.getPropertyName();
-		if (RectangularShape.SIZE_PROP.equals(prop)
-				|| RectangularShape.LOCATION_PROP.equals(prop)) {
+		this.evt = evt;
+		boolean contains = getCastedModel().getPropertiesIdMap()
+				.containsKey(prop);
+		if (contains) {
 			refreshVisuals();
 		} else if (RectangularShape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
 			refreshSourceConnections();
@@ -350,6 +295,17 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 				getCastedModel().getSize());
 		((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(),
 				bounds);
+
+		ActorFigure af = (ActorFigure) getFigure();
+
+		if (evt != null
+				&& getCastedModel().getPropertiesIdMap()
+						.containsKey(evt.getPropertyName())
+				&& af.getLabelMap().containsKey(evt.getOldValue())) {
+			af.getLabelMap().get(evt.getOldValue())
+					.setText((String) evt.getNewValue());
+		}
+
 	}
 
 }

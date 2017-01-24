@@ -193,7 +193,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 			RectangularShape shape = new RectangularShape(
 					paletteComponent.getData());
 
-			return new ShapeCreateCommand((RectangularShape) shape,
+			return new ShapeCreateCommand(shape,
 					(ShapesDiagram) getHost().getModel(),
 					(Rectangle) getConstraintFor(request));
 

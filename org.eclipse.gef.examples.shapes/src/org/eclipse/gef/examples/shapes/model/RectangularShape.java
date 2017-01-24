@@ -13,11 +13,14 @@ package org.eclipse.gef.examples.shapes.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.swt.graphics.Image;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 import org.eclipse.draw2d.geometry.Dimension;
@@ -25,6 +28,9 @@ import org.eclipse.draw2d.geometry.Point;
 
 import org.eclipse.gef.examples.shapes.ShapesPlugin;
 import org.eclipse.gef.examples.xml.ActorRootElement;
+import org.eclipse.gef.examples.xml.GraphicalElement;
+import org.eclipse.gef.examples.xml.PortElement;
+import org.eclipse.gef.examples.xml.PropertyElement;
 
 /**
  * A rectangular shape.
@@ -33,11 +39,138 @@ import org.eclipse.gef.examples.xml.ActorRootElement;
  */
 public class RectangularShape extends ModelElement {
 
+	Map<String, String> propertiesIdMap = new HashMap<>();
+	Map<String, String> descriptorsNameMap = new HashMap<>();
+	private Map<TextPropertyDescriptor, String> descriptorsMap = new HashMap<>();
+	// Propertie View IDs
+	private final String ACTOR_NAME = "Actor.name";
+	private final String ACTOR_TYPE = "Actor.type";
+	private final String ACTOR_ID = "Actor.id";
+	private final String ACTOR = "Actor";
+	private final String PORT = "Port.";
+	private final String GRAPHICAL = "Graphical.";
+	private final String PROPERTY = "Property.";
+	// The names shown in the Propertie View
+	private final String actorCategory = "Actor";
+	private final String portCategory = "Ports";
+	private final String graphicalCategory = "Graphicals P";
+	private final String propertyCategory = "Properties";
+
 	ActorRootElement data;
 
 	public RectangularShape(ActorRootElement data) {
 		super();
 		this.data = data;
+		mapProperiesValues();
+		createPropertyDescriptors();
+	}
+
+	// Create propertie ids for the Properties View
+	private void mapProperiesValues() {
+		int index = 1;
+		String id;
+		propertiesIdMap.put(ACTOR_NAME, data.getName());
+		descriptorsNameMap.put(ACTOR_NAME, "name");
+		propertiesIdMap.put(ACTOR_TYPE, data.getType());
+		descriptorsNameMap.put(ACTOR_TYPE, "type");
+		propertiesIdMap.put(ACTOR_ID, data.getId());
+		descriptorsNameMap.put(ACTOR_ID, "ID");
+
+		for (PortElement port : data.getPort()) {
+			id = PORT + port.getName() + index;
+			propertiesIdMap.put(id, port.getName());
+			descriptorsNameMap.put(id, "name");
+
+			id = PORT + port.getMultiport() + index;
+			propertiesIdMap.put(id, port.getMultiport());
+			descriptorsNameMap.put(id, "multiport");
+
+			id = PORT + port.getType() + index;
+			propertiesIdMap.put(id, port.getType());
+			descriptorsNameMap.put(id, "type");
+
+			id = PORT + port.getWidth() + index;
+			propertiesIdMap.put(id, port.getWidth());
+			descriptorsNameMap.put(id, "width");
+
+			GraphicalElement element = port.getGraphicalElement();
+			id = GRAPHICAL + element.getAlignment() + index;
+			propertiesIdMap.put(id, element.getAlignment());
+			descriptorsNameMap.put(id, "alignment");
+
+			id = GRAPHICAL + element.getColor() + index;
+			propertiesIdMap.put(id, element.getColor());
+			descriptorsNameMap.put(id, "color");
+
+			id = GRAPHICAL + element.getIndex() + index;
+			propertiesIdMap.put(id, element.getIndex());
+			descriptorsNameMap.put(id, "index");
+			index++;
+		}
+
+		index = 1;
+		for (PropertyElement prop : data.getProperty()) {
+			id = PROPERTY + prop.getName() + index;
+			propertiesIdMap.put(id, prop.getName());
+			descriptorsNameMap.put(id, "name");
+
+			id = PROPERTY + prop.getValue() + index;
+			propertiesIdMap.put(id, prop.getValue());
+			descriptorsNameMap.put(id, "value");
+			index++;
+		}
+	}
+
+	private void createPropertyDescriptors() {
+		for (Map.Entry<String, String> entry : propertiesIdMap.entrySet()) {
+
+			if (entry.getKey().startsWith(ACTOR)) {
+				descriptorsMap.put(
+						new TextPropertyDescriptor(entry.getKey(),
+								descriptorsNameMap.get(entry.getKey())),
+						actorCategory);
+
+			} else if (entry.getKey().startsWith(PORT)) {
+				String i = entry.getKey()
+						.substring(entry.getKey().length() - 1);
+				descriptorsMap.put(
+						new TextPropertyDescriptor(entry.getKey(),
+								descriptorsNameMap.get(entry.getKey())),
+						portCategory + i);
+
+			} else if (entry.getKey().startsWith(PROPERTY)) {
+				String i = entry.getKey()
+						.substring(entry.getKey().length() - 1);
+				descriptorsMap.put(
+						new TextPropertyDescriptor(entry.getKey(),
+								descriptorsNameMap.get(entry.getKey())),
+						propertyCategory + i);
+
+			} else if (entry.getKey().startsWith(GRAPHICAL)) {
+				String i = entry.getKey()
+						.substring(entry.getKey().length() - 1);
+				descriptorsMap.put(
+						new TextPropertyDescriptor(entry.getKey(),
+								descriptorsNameMap.get(entry.getKey())),
+						graphicalCategory + i);
+			}
+		}
+
+		System.out.println();
+	}
+
+	private PropertyDescriptor[] addDescriptors() {
+		int i = 0;
+		PropertyDescriptor[] newDescriptors = new PropertyDescriptor[descriptorsMap
+				.size()];
+		for (Map.Entry<TextPropertyDescriptor, String> entry : descriptorsMap
+				.entrySet()) {
+			TextPropertyDescriptor d = entry.getKey();
+			d.setCategory(entry.getValue());
+			newDescriptors[i] = d;
+			i++;
+		}
+		return newDescriptors;
 	}
 
 	/** A 16x16 pictogram of a rectangular shape. */
@@ -62,6 +195,10 @@ public class RectangularShape extends ModelElement {
 		this.data = data;
 	}
 
+	public Map<String, String> getPropertiesIdMap() {
+		return propertiesIdMap;
+	}
+
 	/**
 	 * A static array of property descriptors. There is one IPropertyDescriptor
 	 * entry per editable property.
@@ -81,39 +218,6 @@ public class RectangularShape extends ModelElement {
 	private static final String WIDTH_PROP = "Shape.Width";
 	private static final String XPOS_PROP = "Shape.xPos";
 	private static final String YPOS_PROP = "Shape.yPos";
-	private static final String PORT_1 = "Port.name";
-
-	private static final String DIMENSION_PROP = "Dimension.prop";
-
-	/*
-	 * Initializes the property descriptors array.
-	 * 
-	 * @see #getPropertyDescriptors()
-	 * 
-	 * @see #getPropertyValue(Object)
-	 * 
-	 * @see #setPropertyValue(Object, Object)
-	 */
-	static {
-
-		// Dimension Properties ------------------------------------------------
-		TextPropertyDescriptor x = new TextPropertyDescriptor(XPOS_PROP, "X");
-		x.setCategory("Dimensions");
-		TextPropertyDescriptor y = new TextPropertyDescriptor(YPOS_PROP, "Y");
-		y.setCategory("Dimensions");
-		TextPropertyDescriptor width = new TextPropertyDescriptor(WIDTH_PROP,
-				"Width");
-		width.setCategory("Dimensions");
-		TextPropertyDescriptor height = new TextPropertyDescriptor(HEIGHT_PROP,
-				"Height");
-		height.setCategory("Dimensions");
-		TextPropertyDescriptor prop_name = new TextPropertyDescriptor(PORT_1,
-				"Name");
-		prop_name.setCategory("Port");
-		descriptors = new IPropertyDescriptor[] { x, y, width, height,
-				prop_name };
-
-	}
 
 	protected static Image createImage(String name) {
 		InputStream stream = ShapesPlugin.class.getResourceAsStream(name);
@@ -176,6 +280,8 @@ public class RectangularShape extends ModelElement {
 	 * @see #setPropertyValue(Object, Object)
 	 */
 	public IPropertyDescriptor[] getPropertyDescriptors() {
+		if (descriptors == null)
+			return descriptors = addDescriptors();
 		return descriptors;
 	}
 
@@ -190,6 +296,9 @@ public class RectangularShape extends ModelElement {
 	 * @see #getPropertyDescriptors()
 	 */
 	public Object getPropertyValue(Object propertyId) {
+		if (propertiesIdMap.containsKey(propertyId)) {
+			return propertiesIdMap.get(propertyId);
+		}
 		if (XPOS_PROP.equals(propertyId)) {
 			return Integer.toString(location.x);
 		}
@@ -202,9 +311,7 @@ public class RectangularShape extends ModelElement {
 		if (WIDTH_PROP.equals(propertyId)) {
 			return Integer.toString(size.width);
 		}
-		if (PORT_1.equals(propertyId)) {
-			return data.getPort().iterator().next().getName();
-		}
+
 		return super.getPropertyValue(propertyId);
 	}
 
@@ -280,7 +387,14 @@ public class RectangularShape extends ModelElement {
 	 * @see #getPropertyDescriptors()
 	 */
 	public void setPropertyValue(Object propertyId, Object value) {
-		if (XPOS_PROP.equals(propertyId)) {
+		if (propertiesIdMap.containsKey(propertyId)) {
+			for (String key : propertiesIdMap.keySet()) {
+				if (key == (String) propertyId) {
+					firePropertyChange(key, propertiesIdMap.get(key), value);
+					break;
+				}
+			}
+		} else if (XPOS_PROP.equals(propertyId)) {
 			int x = Integer.parseInt((String) value);
 			setLocation(new Point(x, location.y));
 		} else if (YPOS_PROP.equals(propertyId)) {
@@ -292,8 +406,6 @@ public class RectangularShape extends ModelElement {
 		} else if (WIDTH_PROP.equals(propertyId)) {
 			int width = Integer.parseInt((String) value);
 			setSize(new Dimension(width, size.height));
-		} else if (PORT_1.equals(propertyId)) {
-			firePropertyChange(PORT_1, null, value);
 		} else {
 			super.setPropertyValue(propertyId, value);
 		}

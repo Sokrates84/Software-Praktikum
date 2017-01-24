@@ -1,8 +1,8 @@
 <actor name="Actor" type="ACTOR" ID="1"> 
-	<port name="interruptsActor" multiport="false" width="1" type="inputport"> 
+	<port name="port1Actor" multiport="false" width="1" type="inputport"> 
 		<graphical color="123,215,128" index="1" alignment="West" /> 
 	</port> 
-	<port name="toPeripheralsActor" multiport="false" width="1" type="outputport"> 
+	<port name="port2Actor" multiport="false" width="1" type="outputport"> 
 		<graphical color="123,215,128" index="2" alignment="West" /> 
 	</port> 
 	<property name="Monitor" value="false" /> 

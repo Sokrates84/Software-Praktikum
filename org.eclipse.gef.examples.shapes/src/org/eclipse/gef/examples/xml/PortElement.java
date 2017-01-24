@@ -1,23 +1,21 @@
 
 package org.eclipse.gef.examples.xml;
 
-
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name="port")
+@Root(name = "port")
 public class PortElement {
 
-	@Element(name="graphical")
+	@Element(name = "graphical")
 	private GraphicalElement graphicalElement;
 
 	public GraphicalElement getGraphicalElement() {
 		return graphicalElement;
 	}
-	
-	@Attribute(name="name")
+
+	@Attribute(name = "name")
 	private String name;
 
 	@Attribute
@@ -28,13 +26,12 @@ public class PortElement {
 
 	@Attribute
 	private String type;
-	
 
 	public String getName() {
 		return name;
 	}
 
-	public String isMultiport() {
+	public String getMultiport() {
 		return multiport;
 	}
 
@@ -45,8 +42,5 @@ public class PortElement {
 	public String getType() {
 		return type;
 	}
-	
-	
-
 
 }
