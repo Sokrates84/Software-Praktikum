@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import org.eclipse.gef.ConnectionEditPart;
@@ -275,7 +276,8 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 		this.evt = evt;
 		boolean contains = getCastedModel().getPropertiesIdMap()
 				.containsKey(prop);
-		if (contains) {
+		if (contains || RectangularShape.LOCATION_PROP.equals(prop)
+				|| RectangularShape.SIZE_PROP.equals(prop)) {
 			refreshVisuals();
 		} else if (RectangularShape.SOURCE_CONNECTIONS_PROP.equals(prop)) {
 			refreshSourceConnections();
@@ -298,6 +300,7 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 
 		ActorFigure af = (ActorFigure) getFigure();
 
+		// change the properties shown in the figure
 		if (evt != null
 				&& getCastedModel().getPropertiesIdMap()
 						.containsKey(evt.getPropertyName())
@@ -305,6 +308,12 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 			af.getLabelMap().get(evt.getOldValue())
 					.setText((String) evt.getNewValue());
 		}
+
+		// only set new model values if the property change event isn't a move
+		// or resize event
+		if (evt != null && !(evt.getNewValue() instanceof Dimension))
+			getCastedModel().getPropertiesIdMap().put(evt.getPropertyName(),
+					(String) evt.getNewValue());
 
 	}
 

@@ -39,8 +39,8 @@ import org.eclipse.gef.examples.xml.PropertyElement;
  */
 public class RectangularShape extends ModelElement {
 
-	Map<String, String> propertiesIdMap = new HashMap<>();
-	Map<String, String> descriptorsNameMap = new HashMap<>();
+	private Map<String, String> propertiesIdMap = new HashMap<>();
+	private Map<String, String> descriptorsNameMap = new HashMap<>();
 	private Map<TextPropertyDescriptor, String> descriptorsMap = new HashMap<>();
 	// Propertie View IDs
 	private final String ACTOR_NAME = "Actor.name";
@@ -55,6 +55,16 @@ public class RectangularShape extends ModelElement {
 	private final String portCategory = "Ports";
 	private final String graphicalCategory = "Graphicals P";
 	private final String propertyCategory = "Properties";
+
+	private final String NAME = "name";
+	private final String ID = "Id";
+	private final String TYPE = "type";
+	private final String MULTIPORT = "multiport";
+	private final String WIDTH = "width";
+	private final String ALIGNMENT = "alignment";
+	private final String COLOR = "color";
+	private final String INDEX = "index";
+	private final String VALUE = "value";
 
 	ActorRootElement data;
 
@@ -77,32 +87,32 @@ public class RectangularShape extends ModelElement {
 		descriptorsNameMap.put(ACTOR_ID, "ID");
 
 		for (PortElement port : data.getPort()) {
-			id = PORT + port.getName() + index;
+			id = PORT + NAME + index;
 			propertiesIdMap.put(id, port.getName());
 			descriptorsNameMap.put(id, "name");
 
-			id = PORT + port.getMultiport() + index;
+			id = PORT + MULTIPORT + index;
 			propertiesIdMap.put(id, port.getMultiport());
 			descriptorsNameMap.put(id, "multiport");
 
-			id = PORT + port.getType() + index;
+			id = PORT + TYPE + index;
 			propertiesIdMap.put(id, port.getType());
 			descriptorsNameMap.put(id, "type");
 
-			id = PORT + port.getWidth() + index;
+			id = PORT + WIDTH + index;
 			propertiesIdMap.put(id, port.getWidth());
 			descriptorsNameMap.put(id, "width");
 
 			GraphicalElement element = port.getGraphicalElement();
-			id = GRAPHICAL + element.getAlignment() + index;
+			id = GRAPHICAL + ALIGNMENT + index;
 			propertiesIdMap.put(id, element.getAlignment());
 			descriptorsNameMap.put(id, "alignment");
 
-			id = GRAPHICAL + element.getColor() + index;
+			id = GRAPHICAL + COLOR + index;
 			propertiesIdMap.put(id, element.getColor());
 			descriptorsNameMap.put(id, "color");
 
-			id = GRAPHICAL + element.getIndex() + index;
+			id = GRAPHICAL + INDEX + index;
 			propertiesIdMap.put(id, element.getIndex());
 			descriptorsNameMap.put(id, "index");
 			index++;
@@ -110,11 +120,11 @@ public class RectangularShape extends ModelElement {
 
 		index = 1;
 		for (PropertyElement prop : data.getProperty()) {
-			id = PROPERTY + prop.getName() + index;
+			id = PROPERTY + NAME + index;
 			propertiesIdMap.put(id, prop.getName());
 			descriptorsNameMap.put(id, "name");
 
-			id = PROPERTY + prop.getValue() + index;
+			id = PROPERTY + VALUE + index;
 			propertiesIdMap.put(id, prop.getValue());
 			descriptorsNameMap.put(id, "value");
 			index++;
@@ -389,7 +399,7 @@ public class RectangularShape extends ModelElement {
 	public void setPropertyValue(Object propertyId, Object value) {
 		if (propertiesIdMap.containsKey(propertyId)) {
 			for (String key : propertiesIdMap.keySet()) {
-				if (key == (String) propertyId) {
+				if (key.equals((String) propertyId)) {
 					firePropertyChange(key, propertiesIdMap.get(key), value);
 					break;
 				}
