@@ -28,8 +28,8 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 
 import com.sp.r2.editorplugin.figures.ActorFigure;
-import com.sp.r2.editorplugin.model.ModelElement;
 import com.sp.r2.editorplugin.model.Model;
+import com.sp.r2.editorplugin.model.ModelElement;
 
 /**
  * EditPart used for RectangularShape instances.
@@ -75,8 +75,10 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 	protected IFigure createFigure() {
 		Model shape = (Model) getModel();
 		ActorFigure figure = new ActorFigure(shape.getData());
-		figure.setVisible(true);
 
+		Dimension d = shape.getSize();
+		d.setWidth(figure.getBounds().width + 35);
+		shape.setSize(figure.getDimension());
 		return figure;
 	}
 
@@ -107,52 +109,6 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 		}
 
 		return anchor;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.gef.NodeEditPart#getSourceConnectionAnchor(org.eclipse.gef
-	 * .ConnectionEditPart)
-	 */
-	public ConnectionAnchor getSourceConnectionAnchor(
-			ConnectionEditPart connection) {
-		return getConnectionAnchor();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.gef.NodeEditPart#getSourceConnectionAnchor(org.eclipse.gef
-	 * .Request)
-	 */
-	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		return getConnectionAnchor();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.gef.NodeEditPart#getTargetConnectionAnchor(org.eclipse.gef
-	 * .ConnectionEditPart)
-	 */
-	public ConnectionAnchor getTargetConnectionAnchor(
-			ConnectionEditPart connection) {
-		return getConnectionAnchor();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.gef.NodeEditPart#getTargetConnectionAnchor(org.eclipse.gef
-	 * .Request)
-	 */
-	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
-		return getConnectionAnchor();
 	}
 
 	/*
@@ -208,6 +164,26 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 		if (evt != null && !(evt.getNewValue() instanceof Dimension))
 			getCastedModel().getPropertiesIdMap().put(evt.getPropertyName(), (String) evt.getNewValue());
 
+	}
+
+	@Override
+	public ConnectionAnchor getSourceConnectionAnchor(ConnectionEditPart connection) {
+		return null;
+	}
+
+	@Override
+	public ConnectionAnchor getTargetConnectionAnchor(ConnectionEditPart connection) {
+		return null;
+	}
+
+	@Override
+	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
+		return null;
+	}
+
+	@Override
+	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
+		return null;
 	}
 
 }

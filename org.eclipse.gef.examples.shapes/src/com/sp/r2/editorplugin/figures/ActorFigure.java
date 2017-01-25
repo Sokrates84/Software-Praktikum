@@ -19,12 +19,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 
-import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.XYLayout;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import com.sp.r2.editorplugin.xml.ActorRootElement;
@@ -36,29 +36,27 @@ public class ActorFigure extends Figure {
 	private ActorRootElement data;
 	private Label name = new Label();
 	private XYLayout layout;
-	int x = 5;
+	int x = 15;
 	int y = 5;
 	int width_height = -1;
 
 	public ActorFigure(ActorRootElement data) {
 		this.data = data;
-
-		BorderLayout b = new BorderLayout();
-
 		layout = new XYLayout();
 		setLayoutManager(layout);
 
-		setBorder(new LineBorder());
+		setBorder(new LineBorder(3));
 		setBackgroundColor(ColorConstants.lightGray);
-		setForegroundColor(ColorConstants.lightGray);
+		setOpaque(true);
 		createLabels(data);
-
 	}
 
 	private void createLabels(ActorRootElement data) {
+
 		Font font = new Font(Display.getCurrent(), "sansserif", 11, SWT.BOLD);
 		name.setFont(font);
 		name.setForegroundColor(ColorConstants.blue);
+		name.setBorder(new LineBorder());
 		name.setText(data.getName());
 		add(name);
 		setConstraint(name, new Rectangle(x, y, width_height, width_height));
@@ -81,5 +79,15 @@ public class ActorFigure extends Figure {
 
 	public Map<String, Label> getLabelMap() {
 		return labelMap;
+	}
+
+	public Dimension getDimension() {
+		int width = 0;
+
+		for (Label label : labelMap.values()) {
+			if (label.getTextBounds().width > width)
+				width = label.getTextBounds().width;
+		}
+		return new Dimension(width + 35, y + 15);
 	}
 }

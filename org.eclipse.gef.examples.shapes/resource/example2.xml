@@ -1,10 +1,13 @@
 <actor name="CPU Scheduler" type="CPUSCHEDULER" ID="0"> 
-	<port name="port1Scheduler" multiport="false" width="1" type="inputport"> 
+	<port name="Scheduler" multiport="false" width="1" type="inputport"> 
 		<graphical color="123,215,128" index="1" alignment="East" /> 
 	</port> 
-	<port name="port2Scheduler" multiport="false" width="1" type="outputport"> 
+	<port name="Scheduler" multiport="false" width="1" type="outputport"> 
 		<graphical color="123,215,128" index="2" alignment="West" /> 
-	</port> 
+	</port>
+	<port name="fromCPU" multiport="false" width="1" type="outputport"> 
+		<graphical color="123,215,128" index="2" alignment="West" /> 
+	</port>  
 	<property name="Monitor" value="false" /> 
 	<property name="CPUCycleDuration" value="100" /> 
 </actor>

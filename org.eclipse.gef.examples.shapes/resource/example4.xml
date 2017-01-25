@@ -1,0 +1,16 @@
+<actor name="Interrupt controller" type="INTERUPTCONTROLLER" ID="3"> 
+	<port name="Controller" multiport="false" width="1" type="inputport"> 
+		<graphical color="123,215,128" index="1" alignment="East" /> 
+	</port> 
+	<port name="IRQ1" multiport="false" width="1" type="outputport"> 
+		<graphical color="123,215,128" index="2" alignment="West" /> 
+	</port>
+	<port name="IRQ2" multiport="false" width="1" type="outputport"> 
+		<graphical color="123,215,128" index="2" alignment="West" /> 
+	</port>
+	<port name="toCPU" multiport="false" width="1" type="outputport"> 
+		<graphical color="123,215,128" index="2" alignment="West" /> 
+	</port>  
+	<property name="Interrupt" value="false" /> 
+	<property name="Timeout" value="100" /> 
+</actor>

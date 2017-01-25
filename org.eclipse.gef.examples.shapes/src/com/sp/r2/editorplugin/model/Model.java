@@ -104,41 +104,41 @@ public class Model extends ModelElement {
 		int index = 1;
 		String id;
 		propertiesIdMap.put(ACTOR_NAME, data.getName());
-		descriptorsNameMap.put(ACTOR_NAME, "name");
+		descriptorsNameMap.put(ACTOR_NAME, NAME);
 		propertiesIdMap.put(ACTOR_TYPE, data.getType());
-		descriptorsNameMap.put(ACTOR_TYPE, "type");
+		descriptorsNameMap.put(ACTOR_TYPE, TYPE);
 		propertiesIdMap.put(ACTOR_ID, data.getId());
-		descriptorsNameMap.put(ACTOR_ID, "ID");
+		descriptorsNameMap.put(ACTOR_ID, ID);
 
 		for (PortElement port : data.getPort()) {
 			id = PORT + NAME + index;
 			propertiesIdMap.put(id, port.getName());
-			descriptorsNameMap.put(id, "name");
+			descriptorsNameMap.put(id, NAME);
 
 			id = PORT + MULTIPORT + index;
 			propertiesIdMap.put(id, port.getMultiport());
-			descriptorsNameMap.put(id, "multiport");
+			descriptorsNameMap.put(id, MULTIPORT);
 
 			id = PORT + TYPE + index;
 			propertiesIdMap.put(id, port.getType());
-			descriptorsNameMap.put(id, "type");
+			descriptorsNameMap.put(id, TYPE);
 
 			id = PORT + WIDTH + index;
 			propertiesIdMap.put(id, port.getWidth());
-			descriptorsNameMap.put(id, "width");
+			descriptorsNameMap.put(id, WIDTH);
 
 			GraphicalElement element = port.getGraphicalElement();
 			id = GRAPHICAL + ALIGNMENT + index;
 			propertiesIdMap.put(id, element.getAlignment());
-			descriptorsNameMap.put(id, "alignment");
+			descriptorsNameMap.put(id, ALIGNMENT);
 
 			id = GRAPHICAL + COLOR + index;
 			propertiesIdMap.put(id, element.getColor());
-			descriptorsNameMap.put(id, "color");
+			descriptorsNameMap.put(id, COLOR);
 
 			id = GRAPHICAL + INDEX + index;
 			propertiesIdMap.put(id, element.getIndex());
-			descriptorsNameMap.put(id, "index");
+			descriptorsNameMap.put(id, INDEX);
 			index++;
 		}
 
@@ -146,11 +146,11 @@ public class Model extends ModelElement {
 		for (PropertyElement prop : data.getProperty()) {
 			id = PROPERTY + NAME + index;
 			propertiesIdMap.put(id, prop.getName());
-			descriptorsNameMap.put(id, "name");
+			descriptorsNameMap.put(id, NAME);
 
 			id = PROPERTY + VALUE + index;
 			propertiesIdMap.put(id, prop.getValue());
-			descriptorsNameMap.put(id, "value");
+			descriptorsNameMap.put(id, VALUE);
 			index++;
 		}
 	}

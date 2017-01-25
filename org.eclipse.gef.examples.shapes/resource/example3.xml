@@ -1,0 +1,10 @@
+<actor name="Simulink bridge" type="SIMULINKBRIDGE" ID="2"> 
+	<port name="Bridge" multiport="false" width="1" type="inputport"> 
+		<graphical color="123,215,128" index="1" alignment="East" /> 
+	</port> 
+	<port name="Bridge" multiport="false" width="1" type="outputport"> 
+		<graphical color="123,215,128" index="2" alignment="West" /> 
+	</port> 
+	<property name="Simulink" value="false" /> 
+	<property name="Duration" value="100" /> 
+</actor>
