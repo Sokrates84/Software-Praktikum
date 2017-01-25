@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Plugin.name
 Bundle-SymbolicName: com.sp.r2.editor-plugin;singleton:=true
 Bundle-Version: 3.11.0.qualifier
-Bundle-Activator: org.eclipse.gef.examples.shapes.ShapesPlugin
+Bundle-Activator: com.sp.r2.editorplugin.shapes.ShapesPlugin
 Bundle-Vendor: %Plugin.providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.gef;bundle-version="[3.5.0,4.0.0)",
@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.gef;bundle-version="[3.5.0,4.0.0)",
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8,
  J2SE-1.5
-Export-Package: org.eclipse.gef.examples.xml,
+Export-Package: com.sp.r2.editorplugin.xml,
  org.simpleframework.xml
 Bundle-ClassPath: library.jar,
  .,
