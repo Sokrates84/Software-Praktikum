@@ -15,6 +15,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
+
 import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
@@ -31,10 +35,6 @@ public class ActorFigure extends Figure {
 	private Map<String, Label> labelMap = new HashMap<>();
 	private ActorRootElement data;
 	private Label name = new Label();
-	private Label port1 = new Label();
-	private Label port2 = new Label();
-	private Label port3 = new Label();
-	private Label port4 = new Label();
 	private XYLayout layout;
 	int x = 5;
 	int y = 5;
@@ -56,12 +56,13 @@ public class ActorFigure extends Figure {
 	}
 
 	private void createLabels(ActorRootElement data) {
-
+		Font font = new Font(Display.getCurrent(), "sansserif", 11, SWT.BOLD);
+		name.setFont(font);
 		name.setForegroundColor(ColorConstants.blue);
 		name.setText(data.getName());
 		add(name);
 		setConstraint(name, new Rectangle(x, y, width_height, width_height));
-		y = y + 15;
+		y = y + 25;
 		labelMap.put(data.getName(), name);
 
 		Label label;
