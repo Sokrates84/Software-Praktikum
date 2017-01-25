@@ -399,7 +399,7 @@ public class RectangularShape extends ModelElement {
 	public void setPropertyValue(Object propertyId, Object value) {
 		if (propertiesIdMap.containsKey(propertyId)) {
 			for (String key : propertiesIdMap.keySet()) {
-				if (key.equals((String) propertyId)) {
+				if (key.equals(propertyId)) {
 					firePropertyChange(key, propertiesIdMap.get(key), value);
 					break;
 				}

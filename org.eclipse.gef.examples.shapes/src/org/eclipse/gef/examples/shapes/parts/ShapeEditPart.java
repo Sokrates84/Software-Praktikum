@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 
@@ -48,8 +49,7 @@ import figure.ActorFigure;
  * 
  * @author Elias Volanakis
  */
-class ShapeEditPart extends AbstractGraphicalEditPart
-		implements PropertyChangeListener, NodeEditPart {
+class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeListener, NodeEditPart {
 
 	private ConnectionAnchor anchor;
 	private PropertyChangeEvent evt;
@@ -300,20 +300,23 @@ class ShapeEditPart extends AbstractGraphicalEditPart
 
 		ActorFigure af = (ActorFigure) getFigure();
 
-		// change the properties shown in the figure
-		if (evt != null
-				&& getCastedModel().getPropertiesIdMap()
-						.containsKey(evt.getPropertyName())
-				&& af.getLabelMap().containsKey(evt.getOldValue())) {
-			af.getLabelMap().get(evt.getOldValue())
-					.setText((String) evt.getNewValue());
+		if (evt != null) {
+			boolean modelContainsKey = getCastedModel().getPropertiesIdMap().containsKey(evt.getPropertyName());
+			boolean figureContainsValue = af.getLabelMap().containsKey(evt.getOldValue());
+			// change the properties shown in the figure
+			if (modelContainsKey && figureContainsValue) {
+				Label label = af.getLabelMap().get(evt.getOldValue());
+				label.setText((String) evt.getNewValue());
+				// remove old entry and put new key
+				af.getLabelMap().remove(evt.getOldValue());
+				af.getLabelMap().put((String) evt.getNewValue(), label);
+			}
 		}
 
 		// only set new model values if the property change event isn't a move
 		// or resize event
 		if (evt != null && !(evt.getNewValue() instanceof Dimension))
-			getCastedModel().getPropertiesIdMap().put(evt.getPropertyName(),
-					(String) evt.getNewValue());
+			getCastedModel().getPropertiesIdMap().put(evt.getPropertyName(), (String) evt.getNewValue());
 
 	}
 
