@@ -160,37 +160,28 @@ public class Model extends ModelElement {
 
 			if (entry.getKey().startsWith(ACTOR)) {
 				descriptorsMap.put(
-						new TextPropertyDescriptor(entry.getKey(),
-								descriptorsNameMap.get(entry.getKey())),
+						new TextPropertyDescriptor(entry.getKey(), descriptorsNameMap.get(entry.getKey())),
 						actorCategory);
 
 			} else if (entry.getKey().startsWith(PORT)) {
-				String i = entry.getKey()
-						.substring(entry.getKey().length() - 1);
+				String i = entry.getKey().substring(entry.getKey().length() - 1);
 				descriptorsMap.put(
-						new TextPropertyDescriptor(entry.getKey(),
-								descriptorsNameMap.get(entry.getKey())),
+						new TextPropertyDescriptor(entry.getKey(), descriptorsNameMap.get(entry.getKey())),
 						portCategory + i);
 
 			} else if (entry.getKey().startsWith(PROPERTY)) {
-				String i = entry.getKey()
-						.substring(entry.getKey().length() - 1);
+				String i = entry.getKey().substring(entry.getKey().length() - 1);
 				descriptorsMap.put(
-						new TextPropertyDescriptor(entry.getKey(),
-								descriptorsNameMap.get(entry.getKey())),
+						new TextPropertyDescriptor(entry.getKey(), descriptorsNameMap.get(entry.getKey())),
 						propertyCategory + i);
 
 			} else if (entry.getKey().startsWith(GRAPHICAL)) {
-				String i = entry.getKey()
-						.substring(entry.getKey().length() - 1);
+				String i = entry.getKey().substring(entry.getKey().length() - 1);
 				descriptorsMap.put(
-						new TextPropertyDescriptor(entry.getKey(),
-								descriptorsNameMap.get(entry.getKey())),
+						new TextPropertyDescriptor(entry.getKey(), descriptorsNameMap.get(entry.getKey())),
 						graphicalCategory + i);
 			}
 		}
-
-		System.out.println();
 	}
 
 	private PropertyDescriptor[] addDescriptors() {
@@ -262,9 +253,7 @@ public class Model extends ModelElement {
 	 * @see #setPropertyValue(Object, Object)
 	 */
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		if (descriptors == null)
-			return descriptors = addDescriptors();
-		return descriptors;
+		return descriptors = addDescriptors();
 	}
 
 	/**

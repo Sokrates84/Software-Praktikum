@@ -27,8 +27,8 @@ import org.eclipse.gef.requests.CreateRequest;
 
 import com.sp.r2.editorplugin.commands.ShapeCreateCommand;
 import com.sp.r2.editorplugin.commands.ShapeSetConstraintCommand;
-import com.sp.r2.editorplugin.model.ModelElement;
 import com.sp.r2.editorplugin.model.Model;
+import com.sp.r2.editorplugin.model.ModelElement;
 import com.sp.r2.editorplugin.model.ShapesDiagram;
 import com.sp.r2.editorplugin.shapes.PaletteComponent;
 
@@ -49,8 +49,7 @@ import com.sp.r2.editorplugin.shapes.PaletteComponent;
  * 
  * @author Elias Volanakis
  */
-class DiagramEditPart extends AbstractGraphicalEditPart
-		implements PropertyChangeListener {
+class DiagramEditPart extends AbstractGraphicalEditPart implements PropertyChangeListener {
 
 	/**
 	 * Upon activation, attach to the model element as a property change
@@ -77,6 +76,7 @@ class DiagramEditPart extends AbstractGraphicalEditPart
 		// and creation of new model elements
 		installEditPolicy(EditPolicy.LAYOUT_ROLE,
 				new ShapesXYLayoutEditPolicy());
+
 	}
 
 	/*

@@ -36,17 +36,17 @@ public class ActorFigure extends Figure {
 	private ActorRootElement data;
 	private Label name = new Label();
 	private XYLayout layout;
-	int x = 15;
-	int y = 5;
-	int width_height = -1;
+	private int x = 15;
+	private int y = 5;
+	private int width_height = -1;
 
 	public ActorFigure(ActorRootElement data) {
 		this.data = data;
 		layout = new XYLayout();
 		setLayoutManager(layout);
 
-		setBorder(new LineBorder(3));
-		setBackgroundColor(ColorConstants.lightGray);
+		setBorder(new LineBorder(2));
+		setBackgroundColor(ColorConstants.cyan);
 		setOpaque(true);
 		createLabels(data);
 	}

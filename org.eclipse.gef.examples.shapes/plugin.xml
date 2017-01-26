@@ -25,20 +25,6 @@
       </wizard>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="org.eclipse.gef.examples.shapes"
-            name="Sample Category">
-      </category>
-      <view
-            category="org.eclipse.gef.examples.shapes"
-            class="org.eclipse.gef.examples.shapes.views.PropertiesView"
-            icon="icons/sample.gif"
-            id="org.eclipse.gef.examples.shapes.views.PropertiesView"
-            name="Properties View">
-      </view>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="org.eclipse.jdt.ui.JavaPerspective">
@@ -100,45 +86,5 @@
       </command>
    </extension>
    
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs contributorId="TestsView">
-         <propertyTab
-               category="first"
-               id="propertyTab1"
-               indented="false"
-               label="Name">
-         </propertyTab>
-         <propertyTab
-               afterTab="propertyTab1"
-               category="first"
-               id="propertyTab2"
-               label="Project">
-         </propertyTab>
-         <propertyTab
-               category="second"
-               id="propertyTab3"
-               label="Message">
-         </propertyTab>
-      </propertyTabs>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
-      <propertyContributor
-            contributorId="SamplePropertiesView">
-         <propertyCategory></propertyCategory>
-      </propertyContributor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views.properties.tabbed.propertySections">
-      <propertySections
-            contributorId="propertySection">
-         <propertySection
-               class="PropertySectionFilter"
-               id="propertyTab1"
-               tab="propertyTab1">
-         </propertySection>
-      </propertySections>
-   </extension>
 
 </plugin>

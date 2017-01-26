@@ -13,7 +13,6 @@ package com.sp.r2.editorplugin.editparts;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
@@ -65,6 +64,8 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 		// allow removal of the associated model element
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
 				new ShapeComponentEditPolicy());
+
+		installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new EditPartSelectionEditPolicy());
 	}
 
 	/*
@@ -97,20 +98,6 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 		return (Model) getModel();
 	}
 
-	protected ConnectionAnchor getConnectionAnchor() {
-		if (anchor == null) {
-			if (getModel() instanceof Model) {
-				// anchor = new LabelAnchor((Label) getFigure());
-				// anchor = new RoundedRectangleAnchor(null, null);
-				anchor = new ChopboxAnchor(getFigure());
-			} else
-				// if Shapes gets extended the conditions above must be updated
-				throw new IllegalArgumentException("unexpected model");
-		}
-
-		return anchor;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -120,25 +107,13 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 	public void propertyChange(PropertyChangeEvent evt) {
 		String prop = evt.getPropertyName();
 		this.evt = evt;
-		boolean contains = getCastedModel().getPropertiesIdMap()
-				.containsKey(prop);
-		if (contains || Model.LOCATION_PROP.equals(prop)
-				|| Model.SIZE_PROP.equals(prop)) {
+		boolean contains = getCastedModel().getPropertiesIdMap().containsKey(prop);
+		if (contains || Model.LOCATION_PROP.equals(prop) || Model.SIZE_PROP.equals(prop))
 			refreshVisuals();
-		} else if (Model.SOURCE_CONNECTIONS_PROP.equals(prop)) {
-			refreshSourceConnections();
-		} else if (Model.TARGET_CONNECTIONS_PROP.equals(prop)) {
-			refreshTargetConnections();
-		}
 	}
 
 	protected void refreshVisuals() {
 		// notify parent container of changed position & location
-		// if this line is removed, the XYLayoutManager used by the parent
-		// container
-		// (the Figure of the ShapesDiagramEditPart), will not know the bounds
-		// of this figure
-		// and will not draw it correctly.
 		Rectangle bounds = new Rectangle(getCastedModel().getLocation(),
 				getCastedModel().getSize());
 		((GraphicalEditPart) getParent()).setLayoutConstraint(this, getFigure(),
