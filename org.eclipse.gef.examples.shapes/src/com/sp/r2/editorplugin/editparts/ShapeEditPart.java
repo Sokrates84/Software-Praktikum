@@ -41,7 +41,6 @@ import com.sp.r2.editorplugin.model.ModelElement;
  */
 class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeListener, NodeEditPart {
 
-	private ConnectionAnchor anchor;
 	private PropertyChangeEvent evt;
 
 	/**
@@ -65,7 +64,6 @@ class ShapeEditPart extends AbstractGraphicalEditPart implements PropertyChangeL
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
 				new ShapeComponentEditPolicy());
 
-		installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new EditPartSelectionEditPolicy());
 	}
 
 	/*

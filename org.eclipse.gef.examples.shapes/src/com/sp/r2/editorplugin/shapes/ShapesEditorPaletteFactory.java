@@ -1,15 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2004, 2010 Elias Volanakis and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Elias Volanakis - initial API and implementation
- *******************************************************************************/
 package com.sp.r2.editorplugin.shapes;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -25,44 +16,76 @@ import com.sp.r2.editorplugin.model.Model;
 import com.sp.r2.editorplugin.xml.ActorRootElement;
 
 /**
- * Utility class that can create a GEF Palette.
+ * Utility class that creates a palette an populates it with the parsed
+ * components.
  * 
- * @see #createPalette()
- * @author Elias Volanakis
+ * @author Laurentiu Vlad
+ * @author Tim Ungerhofer
+ * @author Lex Winandy
  */
 public class ShapesEditorPaletteFactory {
 
-	public static PaletteComponent selectedComponent;
-
+	// Singleton instance of the palette drawer
 	private static PaletteDrawer PALETTE_DRAWER;
 
-	/** Create the "Shapes" drawer. */
+	/**
+	 * Pouplates the palette with the palette components. Those contain the
+	 * metadata from the parsed xml files. It takes care not to add multiple
+	 * instances of a ActorRootElement to the container.
+	 * 
+	 * @param componentData
+	 *            a map containing the component metadata.
+	 * @return the populated palette container.
+	 */
 	public static PaletteContainer populatePaletteView(
 			Map<String, ActorRootElement> componentData) {
 
 		for (Map.Entry<String, ActorRootElement> entry : componentData
 				.entrySet()) {
-			// if (!palleteEntryMap.containsKey(entry.getKey())) {
 
-			Model shape = new Model(entry.getValue());
+			if (!containsActorRootElement(entry)) {
+				Model shape = new Model(entry.getValue());
 
-			PaletteComponent component = new PaletteComponent(
-					entry.getValue().getType(),
-					"Create an:" + " " + entry.getValue().getName(),
-					Model.class,
-					new ActorCreationFactory(Model.class, shape),
-					ImageDescriptor.createFromFile(ShapesPlugin.class,
-							"/icons/roundRectangle.png"),
-					ImageDescriptor.createFromFile(ShapesPlugin.class,
-							"/icons/roundRectangle.png"));
+				PaletteComponent component = new PaletteComponent(
+						entry.getValue().getType(),
+						"Create an:" + " " + entry.getValue().getName(),
+						Model.class,
+						new ActorCreationFactory(Model.class, shape),
+						ImageDescriptor.createFromFile(ShapesPlugin.class,
+								"/icons/roundRectangle.png"),
+						ImageDescriptor.createFromFile(ShapesPlugin.class,
+								"/icons/roundRectangle.png"));
 
-			component.setData(entry.getValue());
+				component.setData(entry.getValue());
 
-			PALETTE_DRAWER.add(component);
+				PALETTE_DRAWER.add(component);
+			}
 		}
 		return PALETTE_DRAWER;
 	}
 
+	/**
+	 * Helper method for checking if a element has already been added to the
+	 * container.
+	 * 
+	 * @param entry
+	 * @return {@code true} if the element has already been added. {@code false}
+	 *         otherwise.
+	 */
+	private static boolean containsActorRootElement(Map.Entry<String, ActorRootElement> entry) {
+		List<PaletteComponent> children = PALETTE_DRAWER.getChildren();
+		for (PaletteComponent comp : children)
+			if (comp.getData().getId().equals(entry.getValue().getId()))
+				return true;
+
+		return false;
+	}
+
+	/**
+	 * Getter for a singleton instance of the {@link PaletteDrawer}
+	 * 
+	 * @return the {@link PaletteDrawer}
+	 */
 	public static PaletteDrawer getPaletteDrawer() {
 		if (PALETTE_DRAWER == null) {
 			PALETTE_DRAWER = new PaletteDrawer("Shapes");
@@ -72,8 +95,7 @@ public class ShapesEditorPaletteFactory {
 	}
 
 	/**
-	 * Creates the PaletteRoot and adds all palette elements. Use this factory
-	 * method to create a new palette for your graphical editor.
+	 * Creates the PaletteRoot and adds all palette elements.
 	 * 
 	 * @return a new PaletteRoot
 	 */
@@ -95,17 +117,7 @@ public class ShapesEditorPaletteFactory {
 		return toolbar;
 	}
 
-	/** Utility class. */
+	// Exists only to defeat instantiation.
 	private ShapesEditorPaletteFactory() {
-		// Utility class
 	}
-
-	public static PaletteComponent getSelectedComponent() {
-		return selectedComponent;
-	}
-
-	public static void setSelectedComponent(PaletteComponent s) {
-		selectedComponent = s;
-	}
-
 }

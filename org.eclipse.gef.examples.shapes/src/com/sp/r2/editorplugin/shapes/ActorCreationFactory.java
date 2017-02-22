@@ -1,33 +1,38 @@
-/*******************************************************************************
- * Copyright (c) 2005 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     IBM Corporation - initial API and implementation
- *******************************************************************************/
-
 package com.sp.r2.editorplugin.shapes;
 
 import org.eclipse.gef.requests.CreationFactory;
 
+/**
+ * A factory for creating new {@link PaletteComponent}
+ * 
+ * @author Laurentiu Vlad
+ * @author Tim Ungerhofer
+ * @author Lex Winandy
+ */
 public class ActorCreationFactory implements CreationFactory {
 
 	private Class type;
 	private Object object;
 
+	/**
+	 * Constructor for a ActorCreationFactory
+	 */
 	public ActorCreationFactory(Class type, Object object) {
 		this.type = type;
 		this.object = object;
 	}
 
+	/**
+	 * @see org.eclipse.gef.requests.CreationFactory#getNewObject()
+	 */
 	@Override
 	public Object getNewObject() {
 		return object;
 	}
 
+	/**
+	 * @see org.eclipse.gef.requests.CreationFactory#getObjectType()
+	 */
 	@Override
 	public Object getObjectType() {
 		return type;

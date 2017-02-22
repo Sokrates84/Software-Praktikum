@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2004, 2005 Elias Volanakis and others.
-�* All rights reserved. This program and the accompanying materials
-�* are made available under the terms of the Eclipse Public License v1.0
-�* which accompanies this distribution, and is available at
-�* http://www.eclipse.org/legal/epl-v10.html
-�*
-�* Contributors:
-�*����Elias Volanakis - initial API and implementation
-�*******************************************************************************/
 package com.sp.r2.editorplugin.model;
 
 import java.io.IOException;
@@ -31,12 +21,16 @@ import com.sp.r2.editorplugin.xml.PortElement;
 import com.sp.r2.editorplugin.xml.PropertyElement;
 
 /**
- * A rectangular shape.
+ * Model class for all shapes containing the data and the property descriptors
+ * for the properties view.
  * 
- * @author
+ * @author Laurentiu Vlad
+ * @author Tim Ungerhofer
+ * @author Lex Winandy
  */
 public class Model extends ModelElement {
-
+	private static final long serialVersionUID = 1;
+	// Maps used for the properties view
 	private Map<String, String> propertiesIdMap = new HashMap<>();
 	private Map<String, String> descriptorsNameMap = new HashMap<>();
 	private Map<TextPropertyDescriptor, String> descriptorsMap = new HashMap<>();
@@ -51,15 +45,15 @@ public class Model extends ModelElement {
 	 */
 	private static IPropertyDescriptor[] descriptors;
 
+	// The properties id for the property view
 	public static final String LOCATION_PROP = "Shape.Location";
 	public static final String SIZE_PROP = "Shape.Size";
 	public static final String SOURCE_CONNECTIONS_PROP = "Shape.SourceConn";
 	public static final String TARGET_CONNECTIONS_PROP = "Shape.TargetConn";
-
-	private static final String HEIGHT_PROP = "Shape.Height";
-	private static final String WIDTH_PROP = "Shape.Width";
-	private static final String XPOS_PROP = "Shape.xPos";
-	private static final String YPOS_PROP = "Shape.yPos";
+	private final String HEIGHT_PROP = "Shape.Height";
+	private final String WIDTH_PROP = "Shape.Width";
+	private final String XPOS_PROP = "Shape.xPos";
+	private final String YPOS_PROP = "Shape.yPos";
 	private final String ACTOR_NAME = "Actor.name";
 	private final String ACTOR_TYPE = "Actor.type";
 	private final String ACTOR_ID = "Actor.id";
@@ -67,12 +61,12 @@ public class Model extends ModelElement {
 	private final String PORT = "Port.";
 	private final String GRAPHICAL = "Graphical.";
 	private final String PROPERTY = "Property.";
-	// The names shown in the Propertie View
+	// The names shown in the Propertie View. First level
 	private final String actorCategory = "Actor";
 	private final String portCategory = "Ports";
 	private final String graphicalCategory = "Graphicals P";
 	private final String propertyCategory = "Properties";
-
+	// The names shown in the Propertie View. Second level
 	private final String NAME = "name";
 	private final String ID = "Id";
 	private final String TYPE = "type";
@@ -87,11 +81,15 @@ public class Model extends ModelElement {
 	private Point location = new Point(0, 0);
 	/** Size of this shape. */
 	private Dimension size = new Dimension(100, 100);
-
+	/** The model data. */
 	ActorRootElement data;
 
-	private static final long serialVersionUID = 1;
-
+	/**
+	 * Constructor for a Model
+	 * 
+	 * @param data
+	 *            the model data
+	 */
 	public Model(ActorRootElement data) {
 		super();
 		this.data = data;
@@ -155,6 +153,7 @@ public class Model extends ModelElement {
 		}
 	}
 
+	// Creates IPropertyDescriptor for all entries.
 	private void createPropertyDescriptors() {
 		for (Map.Entry<String, String> entry : propertiesIdMap.entrySet()) {
 
@@ -184,6 +183,7 @@ public class Model extends ModelElement {
 		}
 	}
 
+	// adds all property descriptors from the descriptorsMap
 	private PropertyDescriptor[] addDescriptors() {
 		int i = 0;
 		PropertyDescriptor[] newDescriptors = new PropertyDescriptor[descriptorsMap
@@ -210,14 +210,30 @@ public class Model extends ModelElement {
 		return "Rectangle " + hashCode();
 	}
 
+	/**
+	 * Getter for the element data.
+	 * 
+	 * @return the element data
+	 */
 	public ActorRootElement getData() {
 		return data;
 	}
 
+	/**
+	 * Setter for the element data.
+	 * 
+	 * @param data
+	 *            the data to be set
+	 */
 	public void setData(ActorRootElement data) {
 		this.data = data;
 	}
 
+	/**
+	 * Getter for the properties id map.
+	 * 
+	 * @return the properties id map
+	 */
 	public Map<String, String> getPropertiesIdMap() {
 		return propertiesIdMap;
 	}

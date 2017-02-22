@@ -1,14 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2005 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     IBM Corporation - initial API and implementation
- *******************************************************************************/
-
 package com.sp.r2.editorplugin.figures;
 
 import java.util.Collection;
@@ -30,16 +19,33 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import com.sp.r2.editorplugin.xml.ActorRootElement;
 import com.sp.r2.editorplugin.xml.PortElement;
 
+/**
+ * The view part which will be displayed in the canvas after a drag and drop
+ * from the pallete view.
+ * 
+ * @author Laurentiu Vlad
+ * @author Tim Ungerhofer
+ * @author Lex Winandy
+ */
 public class ActorFigure extends Figure {
 
+	// A map containing all created labels for this figure.
 	private Map<String, Label> labelMap = new HashMap<>();
+	// Data for the label text.
 	private ActorRootElement data;
+	// The name label for this figure.
 	private Label name = new Label();
+	// The layout manager
 	private XYLayout layout;
+
+	// Position values for arranging the labels inside the figure
 	private int x = 15;
 	private int y = 5;
 	private int width_height = -1;
 
+	/**
+	 * Constructor for a ActorFigure.
+	 */
 	public ActorFigure(ActorRootElement data) {
 		this.data = data;
 		layout = new XYLayout();
@@ -51,6 +57,10 @@ public class ActorFigure extends Figure {
 		createLabels(data);
 	}
 
+	/**
+	 * Creates labels according to the provided data in {@link ActorRootElement}
+	 * and sets the corresponding display text.
+	 */
 	private void createLabels(ActorRootElement data) {
 
 		Font font = new Font(Display.getCurrent(), "sansserif", 11, SWT.BOLD);
@@ -77,10 +87,21 @@ public class ActorFigure extends Figure {
 		}
 	}
 
+	/**
+	 * Getter for the label map.
+	 * 
+	 * @return the label map.
+	 */
 	public Map<String, Label> getLabelMap() {
 		return labelMap;
 	}
 
+	/**
+	 * Getter for the figure dimensions. Callings this method will automatically
+	 * enlarge the figure so the label text fits and is not cut.
+	 * 
+	 * @return the adjusted figure dimensions.
+	 */
 	public Dimension getDimension() {
 		int width = 0;
 

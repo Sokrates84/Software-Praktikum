@@ -1,49 +1,53 @@
-/*******************************************************************************
- * Copyright (c) 2005 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     IBM Corporation - initial API and implementation
- *******************************************************************************/
-
 package com.sp.r2.editorplugin.xml;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.gef.palette.PaletteDrawer;
-
+/**
+ * Singleton class for parsing multiple actor xml files and storing them in a
+ * map.
+ * 
+ * @author Laurentiu Vlad
+ * @author Tim Ungerhofer
+ * @author Lex Winandy
+ */
 public class ComponentMetadata {
 
+	/*
+	 * Contains all parsed xml file in the form of ActorRootElement. The id's of
+	 * those elements are the keys.
+	 */
 	private static Map<String, ActorRootElement> componentMetadata = new HashMap<>();
 
-	private static PaletteDrawer PALETTE_DRAWER;
-
-	// Innere private Klasse, die erst beim Zugriff durch die umgebende Klasse
-	// initialisiert wird
+	// Inner private classe, which will only be initialize when accessed by the
+	// surrounding class.
 	private static final class InstanceHolder {
-		// Die Initialisierung von Klassenvariablen geschieht nur einmal
-		// und wird vom ClassLoader implizit synchronisiert
+		// Only "one time" initialization
 		static final ComponentMetadata INSTANCE = new ComponentMetadata();
 	}
 
-	// Verhindere die Erzeugung des Objektes über andere Methoden
+	// Exists only to defeat instantiation.
 	private ComponentMetadata() {
 	}
 
-	// Eine nicht synchronisierte Zugriffsmethode auf Klassenebene.
+	/**
+	 * Getter for the singleton instance.
+	 * 
+	 * @return the singleton instance of this class
+	 */
 	public static ComponentMetadata getInstance() {
 		return InstanceHolder.INSTANCE;
 	}
 
-	public static void populateShapeComponent() {
-
-	}
-
+	/**
+	 * Static method for reading multiple actor xml files and storing them in a
+	 * map.
+	 * 
+	 * @param directoryListing
+	 *            the path to the directory containing the actor xml files.
+	 * @throws Exception
+	 */
 	public static void readXmlMetadata(File[] directoryListing)
 			throws Exception {
 
@@ -60,6 +64,11 @@ public class ComponentMetadata {
 		}
 	}
 
+	/**
+	 * Getter for the map containing the parsed xml files as ActorRootElement.
+	 * 
+	 * @return the map containing the parsed xml files as ActorRootElement.
+	 */
 	public static Map<String, ActorRootElement> getComponentMetadataMap() {
 		return componentMetadata;
 	}
